@@ -1,16 +1,22 @@
-# lockin_app
+# LockIn-App
 
-A new Flutter project.
+🔒 **LockIn – Focus & Productivity App**
+
+A cross-platform mobile app (Android & iOS) built with **Flutter**, designed to help users reduce screen time, improve focus, and build mindful productivity habits.
+
+LockIn encourages deep work through:
+- Customizable focus sessions ⏱️  
+- Distraction control 🚫  
+- Progress insights 📊  
+- Personal journaling 📝  
+- Motivational quotes 💬  
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for the LockIn app.  
+You can run it locally with:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+flutter run
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
