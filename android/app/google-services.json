@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "614983544631",
+    "project_id": "lockin-app-jasgida",
+    "storage_bucket": "lockin-app-jasgida.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614983544631:android:b31d352bd044a5a95934b2",
+        "android_client_info": {
+          "package_name": "com.example.lockin_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClOp08CKFpqfChg9ipuAdLrr2o_bnPa-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
