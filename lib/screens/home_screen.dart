@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/focus_model.dart';
 import '../utils/quotes_manager.dart';
 import '../models/quote.dart'; // ✅ import the Quote model
-import '../main.dart'; // ✅ import for shellKey
+import '../global_keys.dart'; // ✅ correct global key import
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadQuoteAndStats() async {
-    final Quote quoteObj = await QuotesManager.getQuoteForNow(); // ✅ now returns Quote
+    final Quote quoteObj = await QuotesManager.getQuoteForNow();
     final now = DateTime.now();
     final hour = now.hour;
     final greeting = (hour < 12)

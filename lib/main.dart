@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
+import 'global_keys.dart'; // ✅ Import your global shellKey
 import 'providers/theme_model.dart';
 import 'providers/focus_model.dart';
 import 'providers/journal_model.dart';
 import 'screens/shell_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/splash_screen.dart';
 import 'utils/quotes_manager.dart';
-
-// ✅ Add this global key
-final GlobalKey<ShellScreenState> shellKey = GlobalKey<ShellScreenState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // ✅ Initialize Firebase correctly for all platforms
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // ✅ Prepare daily quotes before app starts
   await QuotesManager.ensureQuotesForToday();
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => ThemeModel()),
-      ChangeNotifierProvider(create: (_) => JournalModel()),
-      ChangeNotifierProvider(create: (_) => FocusModel()),
-    ],
-    child: const LockInApp(),
-  ));
+  // ✅ Run the main app with all providers
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeModel()),
+        ChangeNotifierProvider(create: (_) => JournalModel()),
+        ChangeNotifierProvider(create: (_) => FocusModel()),
+      ],
+      child: const LockInApp(),
+    ),
+  );
 }
 
 class LockInApp extends StatelessWidget {
@@ -47,8 +57,10 @@ class LockInApp extends StatelessWidget {
               foregroundColor: scheme.onPrimary,
             ),
           ),
-          // ✅ Pass the key here
-          home: ShellScreen(key: shellKey),
+
+          // ✅ Start with splash screen instead of StreamBuilder
+          // Splash will automatically route to the right page
+          home: const SplashScreen(),
         );
       },
     );

@@ -1,302 +1,1202 @@
 [
-  {"author": "Proverbs 12:24", "quote": "Diligent hands will rule, but laziness ends in forced labor."},
-  {"author": "James Clear", "quote": "You do not rise to the level of your goals. You fall to the level of your systems."},
-  {"author": "Marcus Aurelius", "quote": "You have power over your mind — not outside events. Realize this, and you will find strength."},
-  {"author": "Colossians 3:23", "quote": "Whatever you do, work at it with all your heart, as working for the Lord, not for men."},
-  {"author": "Seneca", "quote": "Luck is what happens when preparation meets opportunity."},
-  {"author": "Epictetus", "quote": "No man is free who is not master of himself."},
-  {"author": "Philippians 4:13", "quote": "I can do all things through Christ who strengthens me."},
-  {"author": "David Goggins", "quote": "You are in danger of living a life so comfortable that you never realize your true potential."},
-  {"author": "Jocko Willink", "quote": "Discipline equals freedom."},
-  {"author": "Proverbs 13:4", "quote": "The soul of the sluggard craves and gets nothing, while the soul of the diligent is richly supplied."},
-  {"author": "Naval Ravikant", "quote": "Play long-term games with long-term people."},
-  {"author": "James 1:12", "quote": "Blessed is the one who perseveres under trial, because, having stood the test, that person will receive the crown of life."},
-  {"author": "Bruce Lee", "quote": "Absorb what is useful, discard what is not, add what is uniquely your own."},
-  {"author": "Romans 5:3–4", "quote": "We rejoice in our sufferings, knowing that suffering produces endurance, endurance produces character, and character produces hope."},
-  {"author": "Jordan Peterson", "quote": "Compare yourself to who you were yesterday, not to who someone else is today."},
-  {"author": "Matthew 6:34", "quote": "Do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own."},
-  {"author": "Seneca", "quote": "It is not that we have a short time to live, but that we waste much of it."},
-  {"author": "James Clear", "quote": "Habits are the compound interest of self-improvement."},
-  {"author": "Psalm 90:17", "quote": "May the favor of the Lord our God rest on us; establish the work of our hands for us."},
-  {"author": "Marcus Aurelius", "quote": "Waste no more time arguing what a good man should be. Be one."},
-  {"author": "Proverbs 16:3", "quote": "Commit to the Lord whatever you do, and He will establish your plans."},
-  {"author": "Steve Jobs", "quote": "The only way to do great work is to love what you do."},
-  {"author": "Ecclesiastes 9:10", "quote": "Whatever your hand finds to do, do it with all your might."},
-  {"author": "Epictetus", "quote": "It's not what happens to you, but how you react to it that matters."},
-  {"author": "2 Timothy 1:7", "quote": "For God gave us a spirit not of fear but of power and love and self-control."},
-  {"author": "David Goggins", "quote": "Be uncommon among uncommon people."},
-  {"author": "Proverbs 21:5", "quote": "The plans of the diligent lead surely to abundance, but everyone who is hasty comes only to poverty."},
-  {"author": "Seneca", "quote": "Difficulties strengthen the mind, as labor does the body."},
-  {"author": "Isaiah 40:31", "quote": "Those who hope in the Lord will renew their strength; they will soar on wings like eagles."},
-  {"author": "Jocko Willink", "quote": "Get up. Go. Do it. Discipline will take you where motivation can’t."},
-  {"author": "Proverbs 14:23", "quote": "All hard work brings a profit, but mere talk leads only to poverty."},
-  {"author": "Marcus Aurelius", "quote": "The impediment to action advances action. What stands in the way becomes the way."},
-  {"author": "Matthew 25:21", "quote": "Well done, good and faithful servant! You have been faithful with a few things; I will put you in charge of many things."},
-  {"author": "James Clear", "quote": "Every action you take is a vote for the type of person you wish to become."},
-  {"author": "Psalm 37:5", "quote": "Commit your way to the Lord; trust in Him, and He will act."},
-  {"author": "Tony Robbins", "quote": "Where focus goes, energy flows."},
-  {"author": "Proverbs 22:29", "quote": "Do you see a man skilled in his work? He will stand before kings; he will not stand before obscure men."},
-  {"author": "Jordan Peterson", "quote": "You must determine where you are going in your life, because you cannot get there unless you move in that direction."},
-  {"author": "Psalm 1:3", "quote": "He is like a tree planted by streams of water, yielding its fruit in season and whose leaf does not wither—whatever he does prospers."},
-  {"author": "Seneca", "quote": "He who is brave is free."},
-  {"author": "Colossians 3:17", "quote": "Whatever you do, whether in word or deed, do it all in the name of the Lord Jesus."},
-  {"author": "Naval Ravikant", "quote": "Desire is a contract you make with yourself to be unhappy until you get what you want."},
-  {"author": "Philippians 3:14", "quote": "I press on toward the goal to win the prize for which God has called me heavenward in Christ Jesus."},
-  {"author": "Marcus Aurelius", "quote": "The happiness of your life depends upon the quality of your thoughts."},
-  {"author": "Psalm 37:7", "quote": "Be still before the Lord and wait patiently for Him."},
-  {"author": "David Goggins", "quote": "Most people who are criticizing and judging haven’t even tried what you failed at."},
-  {"author": "Proverbs 27:17", "quote": "As iron sharpens iron, so one person sharpens another."},
-  {"author": "Epictetus", "quote": "Make the best use of what is in your power, and take the rest as it happens."},
-  {"author": "Isaiah 26:3", "quote": "You will keep in perfect peace those whose minds are steadfast, because they trust in You."},
-  {"author": "James Clear", "quote": "You should be far more concerned with your current trajectory than with your current results."},
-  {"author": "Psalm 46:10", "quote": "Be still, and know that I am God."},
-  {"author": "Seneca", "quote": "Associate with people who are likely to improve you."},
-  {"author": "Romans 12:2", "quote": "Do not conform to the pattern of this world, but be transformed by the renewing of your mind."},
-  {"author": "Jocko Willink", "quote": "Don’t count on motivation; count on discipline."},
-  {"author": "Proverbs 19:21", "quote": "Many are the plans in a person’s heart, but it is the Lord’s purpose that prevails."},
-  {"author": "Marcus Aurelius", "quote": "The best revenge is to be unlike your enemy."},
-  {"author": "Ecclesiastes 7:8", "quote": "The end of a matter is better than its beginning, and patience is better than pride."},
-  {"author": "Tony Robbins", "quote": "It is in your moments of decision that your destiny is shaped."},
-  {"author": "Psalm 126:5", "quote": "Those who sow with tears will reap with songs of joy."},
-  {"author": "David Goggins", "quote": "You are stopping you."},
-  {"author": "Proverbs 3:6", "quote": "In all your ways acknowledge Him, and He will make your paths straight."},
-  {"author": "Seneca", "quote": "To bear trials with a calm mind robs misfortune of its strength."},
-  {"author": "Matthew 7:7", "quote": "Ask and it will be given to you; seek and you will find; knock and the door will be opened to you."},
-  {"author": "Epictetus", "quote": "First say to yourself what you would be; and then do what you have to do."},
-  {"author": "Proverbs 4:25–26", "quote": "Let your eyes look directly forward, and your gaze be straight before you. Ponder the path of your feet."},
-  {"author": "Marcus Aurelius", "quote": "When you arise in the morning think of what a privilege it is to be alive, to think, to enjoy, to love."},
-  {"author": "James Clear", "quote": "Standardize before you optimize."},
-  {"author": "Psalm 112:1", "quote": "Blessed are those who fear the Lord, who find great delight in His commands."},
-  {"author": "Jordan Peterson", "quote": "Treat yourself like someone you are responsible for helping."},
-  {"author": "Proverbs 24:27", "quote": "Put your outdoor work in order and get your fields ready; after that, build your house."},
-  {"author": "Seneca", "quote": "If a man knows not to which port he sails, no wind is favorable."},
-  {"author": "1 Corinthians 9:24", "quote": "Run in such a way as to get the prize."},
-  {"author": "Jocko Willink", "quote": "Good. Use it."},
-  {"author": "Psalm 37:23", "quote": "The Lord makes firm the steps of the one who delights in Him."},
-  {"author": "David Goggins", "quote": "Suffering is a test. That’s all it is. Suffering is the true test of life."},
-  {"author": "Romans 8:28", "quote": "And we know that in all things God works for the good of those who love Him."},
-  {"author": "Epictetus", "quote": "How long are you going to wait before you demand the best for yourself?"},
-  {"author": "Proverbs 18:16", "quote": "A man’s gift makes room for him and brings him before great men."},
-  {"author": "Marcus Aurelius", "quote": "If it is not right, do not do it; if it is not true, do not say it."},
-  {"author": "Psalm 119:105", "quote": "Your word is a lamp for my feet, a light on my path."},
-  {"author": "James Clear", "quote": "You do not rise to the level of your goals. You fall to the level of your systems."},
-  {"author": "Philippians 1:6", "quote": "He who began a good work in you will carry it on to completion."},
-  {"author": "Seneca", "quote": "We suffer more often in imagination than in reality."},
-  {"author": "Matthew 5:16", "quote": "Let your light shine before others, that they may see your good deeds and glorify your Father in heaven."},
-  {"author": "Marcus Aurelius", "quote": "Do every act of your life as though it were the very last act of your life."},
-  {"author": "Psalm 46:1", "quote": "God is our refuge and strength, an ever-present help in trouble."},
-  {"author": "David Goggins", "quote": "You have to build calluses on your brain just like how you build calluses on your hands."},
-  {"author": "Proverbs 20:4", "quote": "Sluggards do not plow in season; so at harvest time they look but find nothing."},
-  {"author": "Epictetus", "quote": "Don’t explain your philosophy. Embody it."},
-  {"author": "Psalm 121:2", "quote": "My help comes from the Lord, the Maker of heaven and earth."},
-  {"author": "Seneca", "quote": "He suffers more than necessary, who suffers before it is necessary."},
-  {"author": "1 Corinthians 15:58", "quote": "Always give yourself fully to the work of the Lord, because you know that your labor in the Lord is not in vain."},
-  {"author": "Marcus Aurelius", "quote": "The obstacle is the way."}
+    {
+        "author": "Proverbs 12:24",
+        "quote": "Diligent hands will rule, but laziness ends in forced labor."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You do not rise to the level of your goals. You fall to the level of your systems."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "You have power over your mind — not outside events. Realize this, and you will find strength."
+    },
+    {
+        "author": "Colossians 3:23",
+        "quote": "Whatever you do, work at it with all your heart, as working for the Lord, not for men."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Luck is what happens when preparation meets opportunity."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "No man is free who is not master of himself."
+    },
+    {
+        "author": "Philippians 4:13",
+        "quote": "I can do all things through Christ who strengthens me."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "You are in danger of living a life so comfortable that you never realize your true potential."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Discipline equals freedom."
+    },
+    {
+        "author": "Proverbs 13:4",
+        "quote": "The soul of the sluggard craves and gets nothing, while the soul of the diligent is richly supplied."
+    },
+    {
+        "author": "Naval Ravikant",
+        "quote": "Play long-term games with long-term people."
+    },
+    {
+        "author": "James 1:12",
+        "quote": "Blessed is the one who perseveres under trial, because, having stood the test, that person will receive the crown of life."
+    },
+    {
+        "author": "Bruce Lee",
+        "quote": "Absorb what is useful, discard what is not, add what is uniquely your own."
+    },
+    {
+        "author": "Romans 5:3–4",
+        "quote": "We rejoice in our sufferings, knowing that suffering produces endurance, endurance produces character, and character produces hope."
+    },
+    {
+        "author": "Jordan Peterson",
+        "quote": "Compare yourself to who you were yesterday, not to who someone else is today."
+    },
+    {
+        "author": "Matthew 6:34",
+        "quote": "Do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own."
+    },
+    {
+        "author": "Seneca",
+        "quote": "It is not that we have a short time to live, but that we waste much of it."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Habits are the compound interest of self-improvement."
+    },
+    {
+        "author": "Psalm 90:17",
+        "quote": "May the favor of the Lord our God rest on us; establish the work of our hands for us."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Waste no more time arguing what a good man should be. Be one."
+    },
+    {
+        "author": "Proverbs 16:3",
+        "quote": "Commit to the Lord whatever you do, and He will establish your plans."
+    },
+    {
+        "author": "Steve Jobs",
+        "quote": "The only way to do great work is to love what you do."
+    },
+    {
+        "author": "Ecclesiastes 9:10",
+        "quote": "Whatever your hand finds to do, do it with all your might."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "It's not what happens to you, but how you react to it that matters."
+    },
+    {
+        "author": "2 Timothy 1:7",
+        "quote": "For God gave us a spirit not of fear but of power and love and self-control."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "Be uncommon among uncommon people."
+    },
+    {
+        "author": "Proverbs 21:5",
+        "quote": "The plans of the diligent lead surely to abundance, but everyone who is hasty comes only to poverty."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Difficulties strengthen the mind, as labor does the body."
+    },
+    {
+        "author": "Isaiah 40:31",
+        "quote": "Those who hope in the Lord will renew their strength; they will soar on wings like eagles."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Get up. Go. Do it. Discipline will take you where motivation can’t."
+    },
+    {
+        "author": "Proverbs 14:23",
+        "quote": "All hard work brings a profit, but mere talk leads only to poverty."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The impediment to action advances action. What stands in the way becomes the way."
+    },
+    {
+        "author": "Matthew 25:21",
+        "quote": "Well done, good and faithful servant! You have been faithful with a few things; I will put you in charge of many things."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Every action you take is a vote for the type of person you wish to become."
+    },
+    {
+        "author": "Psalm 37:5",
+        "quote": "Commit your way to the Lord; trust in Him, and He will act."
+    },
+    {
+        "author": "Tony Robbins",
+        "quote": "Where focus goes, energy flows."
+    },
+    {
+        "author": "Proverbs 22:29",
+        "quote": "Do you see a man skilled in his work? He will stand before kings; he will not stand before obscure men."
+    },
+    {
+        "author": "Jordan Peterson",
+        "quote": "You must determine where you are going in your life, because you cannot get there unless you move in that direction."
+    },
+    {
+        "author": "Psalm 1:3",
+        "quote": "He is like a tree planted by streams of water, yielding its fruit in season and whose leaf does not wither—whatever he does prospers."
+    },
+    {
+        "author": "Seneca",
+        "quote": "He who is brave is free."
+    },
+    {
+        "author": "Colossians 3:17",
+        "quote": "Whatever you do, whether in word or deed, do it all in the name of the Lord Jesus."
+    },
+    {
+        "author": "Naval Ravikant",
+        "quote": "Desire is a contract you make with yourself to be unhappy until you get what you want."
+    },
+    {
+        "author": "Philippians 3:14",
+        "quote": "I press on toward the goal to win the prize for which God has called me heavenward in Christ Jesus."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The happiness of your life depends upon the quality of your thoughts."
+    },
+    {
+        "author": "Psalm 37:7",
+        "quote": "Be still before the Lord and wait patiently for Him."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "Most people who are criticizing and judging haven’t even tried what you failed at."
+    },
+    {
+        "author": "Proverbs 27:17",
+        "quote": "As iron sharpens iron, so one person sharpens another."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Make the best use of what is in your power, and take the rest as it happens."
+    },
+    {
+        "author": "Isaiah 26:3",
+        "quote": "You will keep in perfect peace those whose minds are steadfast, because they trust in You."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You should be far more concerned with your current trajectory than with your current results."
+    },
+    {
+        "author": "Psalm 46:10",
+        "quote": "Be still, and know that I am God."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Associate with people who are likely to improve you."
+    },
+    {
+        "author": "Romans 12:2",
+        "quote": "Do not conform to the pattern of this world, but be transformed by the renewing of your mind."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Don’t count on motivation; count on discipline."
+    },
+    {
+        "author": "Proverbs 19:21",
+        "quote": "Many are the plans in a person’s heart, but it is the Lord’s purpose that prevails."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The best revenge is to be unlike your enemy."
+    },
+    {
+        "author": "Ecclesiastes 7:8",
+        "quote": "The end of a matter is better than its beginning, and patience is better than pride."
+    },
+    {
+        "author": "Tony Robbins",
+        "quote": "It is in your moments of decision that your destiny is shaped."
+    },
+    {
+        "author": "Psalm 126:5",
+        "quote": "Those who sow with tears will reap with songs of joy."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "You are stopping you."
+    },
+    {
+        "author": "Proverbs 3:6",
+        "quote": "In all your ways acknowledge Him, and He will make your paths straight."
+    },
+    {
+        "author": "Seneca",
+        "quote": "To bear trials with a calm mind robs misfortune of its strength."
+    },
+    {
+        "author": "Matthew 7:7",
+        "quote": "Ask and it will be given to you; seek and you will find; knock and the door will be opened to you."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "First say to yourself what you would be; and then do what you have to do."
+    },
+    {
+        "author": "Proverbs 4:25–26",
+        "quote": "Let your eyes look directly forward, and your gaze be straight before you. Ponder the path of your feet."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "When you arise in the morning think of what a privilege it is to be alive, to think, to enjoy, to love."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Standardize before you optimize."
+    },
+    {
+        "author": "Psalm 112:1",
+        "quote": "Blessed are those who fear the Lord, who find great delight in His commands."
+    },
+    {
+        "author": "Jordan Peterson",
+        "quote": "Treat yourself like someone you are responsible for helping."
+    },
+    {
+        "author": "Proverbs 24:27",
+        "quote": "Put your outdoor work in order and get your fields ready; after that, build your house."
+    },
+    {
+        "author": "Seneca",
+        "quote": "If a man knows not to which port he sails, no wind is favorable."
+    },
+    {
+        "author": "1 Corinthians 9:24",
+        "quote": "Run in such a way as to get the prize."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Good. Use it."
+    },
+    {
+        "author": "Psalm 37:23",
+        "quote": "The Lord makes firm the steps of the one who delights in Him."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "Suffering is a test. That’s all it is. Suffering is the true test of life."
+    },
+    {
+        "author": "Romans 8:28",
+        "quote": "And we know that in all things God works for the good of those who love Him."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "How long are you going to wait before you demand the best for yourself?"
+    },
+    {
+        "author": "Proverbs 18:16",
+        "quote": "A man’s gift makes room for him and brings him before great men."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "If it is not right, do not do it; if it is not true, do not say it."
+    },
+    {
+        "author": "Psalm 119:105",
+        "quote": "Your word is a lamp for my feet, a light on my path."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You do not rise to the level of your goals. You fall to the level of your systems."
+    },
+    {
+        "author": "Philippians 1:6",
+        "quote": "He who began a good work in you will carry it on to completion."
+    },
+    {
+        "author": "Seneca",
+        "quote": "We suffer more often in imagination than in reality."
+    },
+    {
+        "author": "Matthew 5:16",
+        "quote": "Let your light shine before others, that they may see your good deeds and glorify your Father in heaven."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Do every act of your life as though it were the very last act of your life."
+    },
+    {
+        "author": "Psalm 46:1",
+        "quote": "God is our refuge and strength, an ever-present help in trouble."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "You have to build calluses on your brain just like how you build calluses on your hands."
+    },
+    {
+        "author": "Proverbs 20:4",
+        "quote": "Sluggards do not plow in season; so at harvest time they look but find nothing."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Don’t explain your philosophy. Embody it."
+    },
+    {
+        "author": "Psalm 121:2",
+        "quote": "My help comes from the Lord, the Maker of heaven and earth."
+    },
+    {
+        "author": "Seneca",
+        "quote": "He suffers more than necessary, who suffers before it is necessary."
+    },
+    {
+        "author": "1 Corinthians 15:58",
+        "quote": "Always give yourself fully to the work of the Lord, because you know that your labor in the Lord is not in vain."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The obstacle is the way."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You don’t need to be more motivated, you need to be more consistent."
+    },
+    {
+        "author": "Psalm 34:17",
+        "quote": "The righteous cry out, and the Lord hears them; He delivers them from all their troubles."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Accept the things to which fate binds you, and love the people with whom fate brings you together."
+    },
+    {
+        "author": "Proverbs 16:9",
+        "quote": "In their hearts humans plan their course, but the Lord establishes their steps."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Begin at once to live, and count each separate day as a separate life."
+    },
+    {
+        "author": "Ecclesiastes 3:1",
+        "quote": "There is a time for everything, and a season for every activity under the heavens."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "Don’t stop when you’re tired. Stop when you’re done."
+    },
+    {
+        "author": "Psalm 119:11",
+        "quote": "I have hidden Your word in my heart that I might not sin against You."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control."
+    },
+    {
+        "author": "Proverbs 10:4",
+        "quote": "Lazy hands make for poverty, but diligent hands bring wealth."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "When you have trouble getting out of bed in the morning, remember your purpose as a human being."
+    },
+    {
+        "author": "Psalm 55:22",
+        "quote": "Cast your cares on the Lord and He will sustain you; He will never let the righteous be shaken."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "When you’re tired, discipline will keep you going."
+    },
+    {
+        "author": "Isaiah 41:10",
+        "quote": "Do not fear, for I am with you; do not be dismayed, for I am your God."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Throw me to the wolves and I will return leading the pack."
+    },
+    {
+        "author": "Proverbs 12:1",
+        "quote": "Whoever loves discipline loves knowledge, but whoever hates correction is stupid."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Very little is needed to make a happy life; it is all within yourself, in your way of thinking."
+    },
+    {
+        "author": "Romans 8:31",
+        "quote": "If God is for us, who can be against us?"
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Don’t explain your philosophy. Embody it."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Small habits don’t add up. They compound."
+    },
+    {
+        "author": "Proverbs 28:19",
+        "quote": "Those who work their land will have abundant food, but those who chase fantasies will have their fill of poverty."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "If it is endurable, then endure it. Stop complaining."
+    },
+    {
+        "author": "Psalm 20:4",
+        "quote": "May He give you the desire of your heart and make all your plans succeed."
+    },
+    {
+        "author": "Seneca",
+        "quote": "If you wish to be loved, love."
+    },
+    {
+        "author": "Philippians 2:3",
+        "quote": "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Get after it. Every single day."
+    },
+    {
+        "author": "Proverbs 3:5-6",
+        "quote": "Trust in the Lord with all your heart and lean not on your own understanding."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Wealth consists not in having great possessions, but in having few wants."
+    },
+    {
+        "author": "Psalm 37:4",
+        "quote": "Delight yourself in the Lord, and He will give you the desires of your heart."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "You have to be willing to suffer to be great."
+    },
+    {
+        "author": "Isaiah 43:2",
+        "quote": "When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you."
+    },
+    {
+        "author": "Seneca",
+        "quote": "To wish to be well is a part of becoming well."
+    },
+    {
+        "author": "Matthew 6:33",
+        "quote": "Seek first the kingdom of God and His righteousness, and all these things will be added to you."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "To live happily is an inward power of the soul."
+    },
+    {
+        "author": "Proverbs 11:25",
+        "quote": "A generous person will prosper; whoever refreshes others will be refreshed."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Don’t seek for everything to happen as you wish it would, but rather wish that everything happens as it actually will — then your life will flow well."
+    },
+    {
+        "author": "Psalm 91:1",
+        "quote": "Whoever dwells in the shelter of the Most High will rest in the shadow of the Almighty."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Goals are good for setting direction, but systems are best for making progress."
+    },
+    {
+        "author": "Proverbs 15:22",
+        "quote": "Plans fail for lack of counsel, but with many advisers they succeed."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The opinion of ten thousand men is of no value if none of them know anything about the subject."
+    },
+    {
+        "author": "Romans 12:12",
+        "quote": "Be joyful in hope, patient in affliction, faithful in prayer."
+    },
+    {
+        "author": "Seneca",
+        "quote": "A gem cannot be polished without friction, nor a man perfected without trials."
+    },
+    {
+        "author": "Philippians 4:6",
+        "quote": "Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Excuses are lies. Face the truth."
+    },
+    {
+        "author": "Psalm 16:8",
+        "quote": "I keep my eyes always on the Lord. With Him at my right hand, I will not be shaken."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "It is not events that disturb people, it is their judgments concerning them."
+    },
+    {
+        "author": "Proverbs 4:7",
+        "quote": "The beginning of wisdom is this: Get wisdom. Though it cost all you have, get understanding."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Loss is nothing else but change, and change is Nature’s delight."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You don’t have to be the best, just be better than you were yesterday."
+    },
+    {
+        "author": "Psalm 27:1",
+        "quote": "The Lord is my light and my salvation—whom shall I fear?"
+    },
+    {
+        "author": "Seneca",
+        "quote": "He who is brave is free."
+    },
+    {
+        "author": "Proverbs 11:3",
+        "quote": "The integrity of the upright guides them, but the unfaithful are destroyed by their duplicity."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "Mental toughness is a lifestyle."
+    },
+    {
+        "author": "Isaiah 26:4",
+        "quote": "Trust in the Lord forever, for the Lord, the Lord Himself, is the Rock eternal."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Control what you can. Cope with what you can’t. Concentrate on what counts."
+    },
+    {
+        "author": "Proverbs 14:29",
+        "quote": "Whoever is patient has great understanding, but one who is quick-tempered displays folly."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The best revenge is not to be like your enemy."
+    },
+    {
+        "author": "Psalm 9:10",
+        "quote": "Those who know Your name trust in You, for You, Lord, have never forsaken those who seek You."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Be the designer of your world and not merely the consumer of it."
+    },
+    {
+        "author": "Seneca",
+        "quote": "To be everywhere is to be nowhere."
+    },
+    {
+        "author": "Philippians 3:13–14",
+        "quote": "Forgetting what is behind and straining toward what is ahead, I press on toward the goal."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "There is no shortcut. There is no hack. There’s only one way — so get after it."
+    },
+    {
+        "author": "Proverbs 20:13",
+        "quote": "Do not love sleep or you will grow poor; stay awake and you will have food to spare."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "A man’s worth is no greater than the worth of his ambitions."
+    },
+    {
+        "author": "Psalm 18:2",
+        "quote": "The Lord is my rock, my fortress and my deliverer; my God is my rock, in whom I take refuge."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "No great thing is created suddenly."
+    },
+    {
+        "author": "Proverbs 13:11",
+        "quote": "Dishonest money dwindles away, but whoever gathers money little by little makes it grow."
+    },
+    {
+        "author": "Seneca",
+        "quote": "As long as you live, keep learning how to live."
+    },
+    {
+        "author": "Psalm 31:24",
+        "quote": "Be strong and take heart, all you who hope in the Lord."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You get what you repeat."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Don’t live as if you had a thousand years. Death hangs over you. While you live, while it is in your power, be good."
+    },
+    {
+        "author": "Proverbs 15:1",
+        "quote": "A gentle answer turns away wrath, but a harsh word stirs up anger."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "The only way to grow is to suffer."
+    },
+    {
+        "author": "Isaiah 58:11",
+        "quote": "The Lord will guide you always; He will satisfy your needs in a sun-scorched land."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Don’t explain yourself to others. Your actions will do that for you."
+    },
+    {
+        "author": "Psalm 119:50",
+        "quote": "My comfort in my suffering is this: Your promise preserves my life."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Wherever there is a human being, there is an opportunity for kindness."
+    },
+    {
+        "author": "Philippians 4:8",
+        "quote": "Whatever is true, whatever is noble, whatever is right, whatever is pure—think about such things."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Lead yourself before you lead others."
+    },
+    {
+        "author": "Proverbs 18:21",
+        "quote": "The tongue has the power of life and death, and those who love it will eat its fruit."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The soul becomes dyed with the color of its thoughts."
+    },
+    {
+        "author": "Psalm 23:4",
+        "quote": "Even though I walk through the darkest valley, I will fear no evil, for You are with me."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Every habit is a decision about who you are becoming."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Life is long if you know how to use it."
+    },
+    {
+        "author": "Romans 15:13",
+        "quote": "May the God of hope fill you with all joy and peace as you trust in Him."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "You can’t hurt me. You can only make me stronger."
+    },
+    {
+        "author": "Proverbs 3:9",
+        "quote": "Honor the Lord with your wealth, with the firstfruits of all your crops."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Only the educated are free."
+    },
+    {
+        "author": "Psalm 37:28",
+        "quote": "For the Lord loves the just and will not forsake His faithful ones."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "When someone is properly grounded in life, they shouldn’t have to look outside themselves for approval."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Success is the product of daily habits—not once-in-a-lifetime transformations."
+    },
+    {
+        "author": "Seneca",
+        "quote": "We suffer more often in imagination than in reality."
+    },
+    {
+        "author": "Psalm 46:1",
+        "quote": "God is our refuge and strength, an ever-present help in trouble."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Be tolerant with others and strict with yourself."
+    },
+    {
+        "author": "Proverbs 19:21",
+        "quote": "Many are the plans in a person’s heart, but it is the Lord’s purpose that prevails."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "No man is free who is not master of himself."
+    },
+    {
+        "author": "Romans 5:3-4",
+        "quote": "We glory in our sufferings, because suffering produces perseverance; perseverance, character; and character, hope."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Habits are the compound interest of self-improvement."
+    },
+    {
+        "author": "Psalm 112:7",
+        "quote": "They will have no fear of bad news; their hearts are steadfast, trusting in the Lord."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Discipline is your best friend."
+    },
+    {
+        "author": "Proverbs 22:29",
+        "quote": "Do you see someone skilled in their work? They will serve before kings."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "You have to build calluses on your brain just like your hands."
+    },
+    {
+        "author": "Psalm 121:2",
+        "quote": "My help comes from the Lord, the Maker of heaven and earth."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "You have power over your mind — not outside events. Realize this, and you will find strength."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You do not rise to the level of your goals, you fall to the level of your systems."
+    },
+    {
+        "author": "Philippians 4:13",
+        "quote": "I can do all things through Christ who strengthens me."
+    },
+    {
+        "author": "Seneca",
+        "quote": "It is not that we have a short time to live, but that we waste a lot of it."
+    },
+    {
+        "author": "Matthew 19:26",
+        "quote": "With God all things are possible."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "It is impossible for a man to learn what he thinks he already knows."
+    },
+    {
+        "author": "Psalm 37:23",
+        "quote": "The Lord makes firm the steps of the one who delights in Him."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "You could leave life right now. Let that determine what you do, say, and think."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Standardize before you optimize."
+    },
+    {
+        "author": "Proverbs 3:7",
+        "quote": "Do not be wise in your own eyes; fear the Lord and shun evil."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "The test is not the obstacle itself, but your response to it."
+    },
+    {
+        "author": "Psalm 46:10",
+        "quote": "Be still, and know that I am God."
+    },
+    {
+        "author": "Seneca",
+        "quote": "He who fears death will never do anything worthy of a man who is alive."
+    },
+    {
+        "author": "Romans 8:18",
+        "quote": "The sufferings of this present time are not worth comparing with the glory that will be revealed in us."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "You are in control. Stop letting fear dictate your actions."
+    },
+    {
+        "author": "Psalm 37:5",
+        "quote": "Commit your way to the Lord; trust in Him and He will do this."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "If someone can show me that what I think or do is not right, I will happily change."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "If you want to improve, be content to be thought foolish and stupid."
+    },
+    {
+        "author": "Proverbs 16:3",
+        "quote": "Commit to the Lord whatever you do, and He will establish your plans."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Motion does not equal progress. Action does."
+    },
+    {
+        "author": "Psalm 73:26",
+        "quote": "My flesh and my heart may fail, but God is the strength of my heart and my portion forever."
+    },
+    {
+        "author": "Seneca",
+        "quote": "It is not the man who has too little, but the man who craves more, that is poor."
+    },
+    {
+        "author": "Philippians 1:6",
+        "quote": "He who began a good work in you will carry it on to completion until the day of Christ Jesus."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Good. That’s your opportunity to get better."
+    },
+    {
+        "author": "Proverbs 24:27",
+        "quote": "Put your outdoor work in order and get your fields ready; after that, build your house."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "To love only what happens, what was destined. No greater harmony."
+    },
+    {
+        "author": "Psalm 55:16",
+        "quote": "As for me, I call to God, and the Lord saves me."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Circumstances don’t make the man, they only reveal him to himself."
+    },
+    {
+        "author": "Romans 12:2",
+        "quote": "Do not conform to the pattern of this world, but be transformed by the renewing of your mind."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Success is rarely the result of one massive action. It’s the result of small habits over time."
+    },
+    {
+        "author": "Psalm 37:7",
+        "quote": "Be still before the Lord and wait patiently for Him."
+    },
+    {
+        "author": "Seneca",
+        "quote": "A wise man is content with his lot, whatever it may be."
+    },
+    {
+        "author": "Isaiah 40:31",
+        "quote": "Those who hope in the Lord will renew their strength; they will soar on wings like eagles."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "Pain unlocks a secret doorway in the mind."
+    },
+    {
+        "author": "Proverbs 13:20",
+        "quote": "Walk with the wise and become wise, for a companion of fools suffers harm."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "You become what you give your attention to."
+    },
+    {
+        "author": "Psalm 119:105",
+        "quote": "Your word is a lamp to my feet and a light to my path."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "No one is ever unhappy because of someone else."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You do not rise to the level of your motivation, you fall to the level of your discipline."
+    },
+    {
+        "author": "Proverbs 27:17",
+        "quote": "As iron sharpens iron, so one person sharpens another."
+    },
+    {
+        "author": "Seneca",
+        "quote": "If you live in harmony with nature, you will never be poor; if you live according to opinion, you will never be rich."
+    },
+    {
+        "author": "Psalm 94:19",
+        "quote": "When anxiety was great within me, Your consolation brought me joy."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Be content to seem what you really are."
+    },
+    {
+        "author": "Romans 8:28",
+        "quote": "And we know that in all things God works for the good of those who love Him."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Man is not worried by real problems so much as by his imagined anxieties about real problems."
+    },
+    {
+        "author": "Proverbs 16:32",
+        "quote": "Better a patient person than a warrior, one with self-control than one who takes a city."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "There is no growth without discomfort."
+    },
+    {
+        "author": "Psalm 121:8",
+        "quote": "The Lord will watch over your coming and going both now and forevermore."
+    },
+    {
+        "author": "Seneca",
+        "quote": "He suffers more than necessary who suffers before it is necessary."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You should be more concerned with your current trajectory than your current results."
+    },
+    {
+        "author": "Philippians 4:19",
+        "quote": "My God will meet all your needs according to the riches of His glory in Christ Jesus."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The happiness of your life depends upon the quality of your thoughts."
+    },
+    {
+        "author": "Psalm 18:30",
+        "quote": "As for God, His way is perfect; the Lord’s word is flawless."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Don’t live by what others think of you."
+    },
+    {
+        "author": "Proverbs 21:5",
+        "quote": "The plans of the diligent lead to profit as surely as haste leads to poverty."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "Don’t count the days, make the days count."
+    },
+    {
+        "author": "Psalm 23:6",
+        "quote": "Surely goodness and mercy shall follow me all the days of my life."
+    },
+    {
+        "author": "Seneca",
+        "quote": "To bear trials with a calm mind robs misfortune of its strength."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Don’t be the victim of your environment. Build one that empowers you."
+    },
+    {
+        "author": "Proverbs 14:23",
+        "quote": "All hard work brings a profit, but mere talk leads only to poverty."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "When you arise in the morning, think of what a privilege it is to be alive, to think, to enjoy, to love."
+    },
+    {
+        "author": "Psalm 33:20",
+        "quote": "We wait in hope for the Lord; He is our help and our shield."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "First say to yourself what you would be; and then do what you have to do."
+    },
+    {
+        "author": "Proverbs 17:22",
+        "quote": "A cheerful heart is good medicine, but a crushed spirit dries up the bones."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "There’s no weakness in discipline. Only strength."
+    },
+    {
+        "author": "Psalm 32:8",
+        "quote": "I will instruct you and teach you in the way you should go; I will counsel you with My loving eye on you."
+    },
+    {
+        "author": "Seneca",
+        "quote": "The greater the difficulty, the more glory in surmounting it."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Be patient. Big things come from small beginnings."
+    },
+    {
+        "author": "Romans 12:11",
+        "quote": "Never be lacking in zeal, but keep your spiritual fervor, serving the Lord."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Look well into yourself; there is a source of strength which will always spring up if you will always look."
+    },
+    {
+        "author": "Psalm 27:14",
+        "quote": "Wait for the Lord; be strong and take heart and wait for the Lord."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "It’s not what happens, but how you respond, that matters."
+    },
+    {
+        "author": "Proverbs 11:30",
+        "quote": "The fruit of the righteous is a tree of life, and the one who is wise saves lives."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "There is no finish line."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Do every act of your life as though it were the very last act of your life."
+    },
+    {
+        "author": "Proverbs 4:23",
+        "quote": "Above all else, guard your heart, for everything you do flows from it."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "No great thing is created suddenly."
+    },
+    {
+        "author": "Psalm 9:10",
+        "quote": "Those who know your name trust in you, for you, Lord, have never forsaken those who seek you."
+    },
+    {
+        "author": "Seneca",
+        "quote": "While we wait for life, life passes."
+    },
+    {
+        "author": "James Clear",
+        "quote": "Start small, stay consistent, and build momentum."
+    },
+    {
+        "author": "Romans 15:13",
+        "quote": "May the God of hope fill you with all joy and peace as you trust in Him."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "Accept whatever comes to you woven in the pattern of your destiny, for what could more aptly fit your needs?"
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Every day is a battle. Win the morning, win the day."
+    },
+    {
+        "author": "Psalm 27:1",
+        "quote": "The Lord is my light and my salvation—whom shall I fear?"
+    },
+    {
+        "author": "Epictetus",
+        "quote": "If you wish to be good, first believe that you are bad."
+    },
+    {
+        "author": "Proverbs 12:24",
+        "quote": "Diligent hands will rule, but laziness ends in forced labor."
+    },
+    {
+        "author": "Seneca",
+        "quote": "It is the power of the mind to be unconquerable."
+    },
+    {
+        "author": "James Clear",
+        "quote": "If you want better results, forget about setting goals. Focus on your system instead."
+    },
+    {
+        "author": "Isaiah 26:3",
+        "quote": "You will keep in perfect peace those whose minds are steadfast, because they trust in you."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "The soul becomes dyed with the color of its thoughts."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control."
+    },
+    {
+        "author": "Psalm 19:14",
+        "quote": "May these words of my mouth and this meditation of my heart be pleasing in your sight, Lord."
+    },
+    {
+        "author": "David Goggins",
+        "quote": "It’s so easy to be great nowadays, because most people are weak."
+    },
+    {
+        "author": "Proverbs 3:6",
+        "quote": "In all your ways submit to Him, and He will make your paths straight."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Associate with people who are likely to improve you."
+    },
+    {
+        "author": "James Clear",
+        "quote": "You don’t need to be more motivated, you need to be more consistent."
+    },
+    {
+        "author": "Philippians 4:8",
+        "quote": "Whatever is true, noble, right, pure, lovely, admirable—think about such things."
+    },
+    {
+        "author": "Marcus Aurelius",
+        "quote": "When you have trouble getting out of bed, remind yourself: I am rising to do the work of a human being."
+    },
+    {
+        "author": "Epictetus",
+        "quote": "Don’t explain your philosophy. Embody it."
+    },
+    {
+        "author": "Psalm 37:4",
+        "quote": "Take delight in the Lord, and He will give you the desires of your heart."
+    },
+    {
+        "author": "Jocko Willink",
+        "quote": "Get after it. Every single day."
+    },
+    {
+        "author": "Seneca",
+        "quote": "Sometimes even to live is an act of courage."
+    },
+    {
+        "author": "Romans 8:31",
+        "quote": "If God is for us, who can be against us?"
+    },
+    {
+        "author": "James Clear",
+        "quote": "Be the designer of your world, not merely the consumer of it."
+    }
 ]
-  {"author": "James Clear", "quote": "You don’t need to be more motivated, you need to be more consistent."},
-  {"author": "Psalm 34:17", "quote": "The righteous cry out, and the Lord hears them; He delivers them from all their troubles."},
-  {"author": "Marcus Aurelius", "quote": "Accept the things to which fate binds you, and love the people with whom fate brings you together."},
-  {"author": "Proverbs 16:9", "quote": "In their hearts humans plan their course, but the Lord establishes their steps."},
-  {"author": "Seneca", "quote": "Begin at once to live, and count each separate day as a separate life."},
-  {"author": "Ecclesiastes 3:1", "quote": "There is a time for everything, and a season for every activity under the heavens."},
-  {"author": "David Goggins", "quote": "Don’t stop when you’re tired. Stop when you’re done."},
-  {"author": "Psalm 119:11", "quote": "I have hidden Your word in my heart that I might not sin against You."},
-  {"author": "Epictetus", "quote": "Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control."},
-  {"author": "Proverbs 10:4", "quote": "Lazy hands make for poverty, but diligent hands bring wealth."},
-  {"author": "Marcus Aurelius", "quote": "When you have trouble getting out of bed in the morning, remember your purpose as a human being."},
-  {"author": "Psalm 55:22", "quote": "Cast your cares on the Lord and He will sustain you; He will never let the righteous be shaken."},
-  {"author": "Jocko Willink", "quote": "When you’re tired, discipline will keep you going."},
-  {"author": "Isaiah 41:10", "quote": "Do not fear, for I am with you; do not be dismayed, for I am your God."},
-  {"author": "Seneca", "quote": "Throw me to the wolves and I will return leading the pack."},
-  {"author": "Proverbs 12:1", "quote": "Whoever loves discipline loves knowledge, but whoever hates correction is stupid."},
-  {"author": "Marcus Aurelius", "quote": "Very little is needed to make a happy life; it is all within yourself, in your way of thinking."},
-  {"author": "Romans 8:31", "quote": "If God is for us, who can be against us?"},
-  {"author": "Epictetus", "quote": "Don’t explain your philosophy. Embody it."},
-  {"author": "James Clear", "quote": "Small habits don’t add up. They compound."},
-  {"author": "Proverbs 28:19", "quote": "Those who work their land will have abundant food, but those who chase fantasies will have their fill of poverty."},
-  {"author": "Marcus Aurelius", "quote": "If it is endurable, then endure it. Stop complaining."},
-  {"author": "Psalm 20:4", "quote": "May He give you the desire of your heart and make all your plans succeed."},
-  {"author": "Seneca", "quote": "If you wish to be loved, love."},
-  {"author": "Philippians 2:3", "quote": "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves."},
-  {"author": "Jocko Willink", "quote": "Get after it. Every single day."},
-  {"author": "Proverbs 3:5-6", "quote": "Trust in the Lord with all your heart and lean not on your own understanding."},
-  {"author": "Epictetus", "quote": "Wealth consists not in having great possessions, but in having few wants."},
-  {"author": "Psalm 37:4", "quote": "Delight yourself in the Lord, and He will give you the desires of your heart."},
-  {"author": "David Goggins", "quote": "You have to be willing to suffer to be great."},
-  {"author": "Isaiah 43:2", "quote": "When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you."},
-  {"author": "Seneca", "quote": "To wish to be well is a part of becoming well."},
-  {"author": "Matthew 6:33", "quote": "Seek first the kingdom of God and His righteousness, and all these things will be added to you."},
-  {"author": "Marcus Aurelius", "quote": "To live happily is an inward power of the soul."},
-  {"author": "Proverbs 11:25", "quote": "A generous person will prosper; whoever refreshes others will be refreshed."},
-  {"author": "Epictetus", "quote": "Don’t seek for everything to happen as you wish it would, but rather wish that everything happens as it actually will — then your life will flow well."},
-  {"author": "Psalm 91:1", "quote": "Whoever dwells in the shelter of the Most High will rest in the shadow of the Almighty."},
-  {"author": "James Clear", "quote": "Goals are good for setting direction, but systems are best for making progress."},
-  {"author": "Proverbs 15:22", "quote": "Plans fail for lack of counsel, but with many advisers they succeed."},
-  {"author": "Marcus Aurelius", "quote": "The opinion of ten thousand men is of no value if none of them know anything about the subject."},
-  {"author": "Romans 12:12", "quote": "Be joyful in hope, patient in affliction, faithful in prayer."},
-  {"author": "Seneca", "quote": "A gem cannot be polished without friction, nor a man perfected without trials."},
-  {"author": "Philippians 4:6", "quote": "Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God."},
-  {"author": "Jocko Willink", "quote": "Excuses are lies. Face the truth."},
-  {"author": "Psalm 16:8", "quote": "I keep my eyes always on the Lord. With Him at my right hand, I will not be shaken."},
-  {"author": "Epictetus", "quote": "It is not events that disturb people, it is their judgments concerning them."},
-  {"author": "Proverbs 4:7", "quote": "The beginning of wisdom is this: Get wisdom. Though it cost all you have, get understanding."},
-  {"author": "Marcus Aurelius", "quote": "Loss is nothing else but change, and change is Nature’s delight."},
-  {"author": "James Clear", "quote": "You don’t have to be the best, just be better than you were yesterday."},
-  {"author": "Psalm 27:1", "quote": "The Lord is my light and my salvation—whom shall I fear?"},
-  {"author": "Seneca", "quote": "He who is brave is free."},
-  {"author": "Proverbs 11:3", "quote": "The integrity of the upright guides them, but the unfaithful are destroyed by their duplicity."},
-  {"author": "David Goggins", "quote": "Mental toughness is a lifestyle."},
-  {"author": "Isaiah 26:4", "quote": "Trust in the Lord forever, for the Lord, the Lord Himself, is the Rock eternal."},
-  {"author": "Epictetus", "quote": "Control what you can. Cope with what you can’t. Concentrate on what counts."},
-  {"author": "Proverbs 14:29", "quote": "Whoever is patient has great understanding, but one who is quick-tempered displays folly."},
-  {"author": "Marcus Aurelius", "quote": "The best revenge is not to be like your enemy."},
-  {"author": "Psalm 9:10", "quote": "Those who know Your name trust in You, for You, Lord, have never forsaken those who seek You."},
-  {"author": "James Clear", "quote": "Be the designer of your world and not merely the consumer of it."},
-  {"author": "Seneca", "quote": "To be everywhere is to be nowhere."},
-  {"author": "Philippians 3:13–14", "quote": "Forgetting what is behind and straining toward what is ahead, I press on toward the goal."},
-  {"author": "Jocko Willink", "quote": "There is no shortcut. There is no hack. There’s only one way — so get after it."},
-  {"author": "Proverbs 20:13", "quote": "Do not love sleep or you will grow poor; stay awake and you will have food to spare."},
-  {"author": "Marcus Aurelius", "quote": "A man’s worth is no greater than the worth of his ambitions."},
-  {"author": "Psalm 18:2", "quote": "The Lord is my rock, my fortress and my deliverer; my God is my rock, in whom I take refuge."},
-  {"author": "Epictetus", "quote": "No great thing is created suddenly."},
-  {"author": "Proverbs 13:11", "quote": "Dishonest money dwindles away, but whoever gathers money little by little makes it grow."},
-  {"author": "Seneca", "quote": "As long as you live, keep learning how to live."},
-  {"author": "Psalm 31:24", "quote": "Be strong and take heart, all you who hope in the Lord."},
-  {"author": "James Clear", "quote": "You get what you repeat."},
-  {"author": "Marcus Aurelius", "quote": "Don’t live as if you had a thousand years. Death hangs over you. While you live, while it is in your power, be good."},
-  {"author": "Proverbs 15:1", "quote": "A gentle answer turns away wrath, but a harsh word stirs up anger."},
-  {"author": "David Goggins", "quote": "The only way to grow is to suffer."},
-  {"author": "Isaiah 58:11", "quote": "The Lord will guide you always; He will satisfy your needs in a sun-scorched land."},
-  {"author": "Epictetus", "quote": "Don’t explain yourself to others. Your actions will do that for you."},
-  {"author": "Psalm 119:50", "quote": "My comfort in my suffering is this: Your promise preserves my life."},
-  {"author": "Seneca", "quote": "Wherever there is a human being, there is an opportunity for kindness."},
-  {"author": "Philippians 4:8", "quote": "Whatever is true, whatever is noble, whatever is right, whatever is pure—think about such things."},
-  {"author": "Jocko Willink", "quote": "Lead yourself before you lead others."},
-  {"author": "Proverbs 18:21", "quote": "The tongue has the power of life and death, and those who love it will eat its fruit."},
-  {"author": "Marcus Aurelius", "quote": "The soul becomes dyed with the color of its thoughts."},
-  {"author": "Psalm 23:4", "quote": "Even though I walk through the darkest valley, I will fear no evil, for You are with me."},
-  {"author": "James Clear", "quote": "Every habit is a decision about who you are becoming."},
-  {"author": "Seneca", "quote": "Life is long if you know how to use it."},
-  {"author": "Romans 15:13", "quote": "May the God of hope fill you with all joy and peace as you trust in Him."},
-  {"author": "David Goggins", "quote": "You can’t hurt me. You can only make me stronger."},
-  {"author": "Proverbs 3:9", "quote": "Honor the Lord with your wealth, with the firstfruits of all your crops."},
-  {"author": "Epictetus", "quote": "Only the educated are free."},
-  {"author": "Psalm 37:28", "quote": "For the Lord loves the just and will not forsake His faithful ones."},
-  {"author": "Marcus Aurelius", "quote": "When someone is properly grounded in life, they shouldn’t have to look outside themselves for approval."},
-  {"author": "James Clear", "quote": "Success is the product of daily habits—not once-in-a-lifetime transformations."}
-  {"author": "Seneca", "quote": "We suffer more often in imagination than in reality."},
-  {"author": "Psalm 46:1", "quote": "God is our refuge and strength, an ever-present help in trouble."},
-  {"author": "Marcus Aurelius", "quote": "Be tolerant with others and strict with yourself."},
-  {"author": "Proverbs 19:21", "quote": "Many are the plans in a person’s heart, but it is the Lord’s purpose that prevails."},
-  {"author": "Epictetus", "quote": "No man is free who is not master of himself."},
-  {"author": "Romans 5:3-4", "quote": "We glory in our sufferings, because suffering produces perseverance; perseverance, character; and character, hope."},
-  {"author": "James Clear", "quote": "Habits are the compound interest of self-improvement."},
-  {"author": "Psalm 112:7", "quote": "They will have no fear of bad news; their hearts are steadfast, trusting in the Lord."},
-  {"author": "Jocko Willink", "quote": "Discipline is your best friend."},
-  {"author": "Proverbs 22:29", "quote": "Do you see someone skilled in their work? They will serve before kings."},
-  {"author": "David Goggins", "quote": "You have to build calluses on your brain just like your hands."},
-  {"author": "Psalm 121:2", "quote": "My help comes from the Lord, the Maker of heaven and earth."},
-  {"author": "Marcus Aurelius", "quote": "You have power over your mind — not outside events. Realize this, and you will find strength."},
-  {"author": "James Clear", "quote": "You do not rise to the level of your goals, you fall to the level of your systems."},
-  {"author": "Philippians 4:13", "quote": "I can do all things through Christ who strengthens me."},
-  {"author": "Seneca", "quote": "It is not that we have a short time to live, but that we waste a lot of it."},
-  {"author": "Matthew 19:26", "quote": "With God all things are possible."},
-  {"author": "Epictetus", "quote": "It is impossible for a man to learn what he thinks he already knows."},
-  {"author": "Psalm 37:23", "quote": "The Lord makes firm the steps of the one who delights in Him."},
-  {"author": "Marcus Aurelius", "quote": "You could leave life right now. Let that determine what you do, say, and think."},
-  {"author": "James Clear", "quote": "Standardize before you optimize."},
-  {"author": "Proverbs 3:7", "quote": "Do not be wise in your own eyes; fear the Lord and shun evil."},
-  {"author": "Jocko Willink", "quote": "The test is not the obstacle itself, but your response to it."},
-  {"author": "Psalm 46:10", "quote": "Be still, and know that I am God."},
-  {"author": "Seneca", "quote": "He who fears death will never do anything worthy of a man who is alive."},
-  {"author": "Romans 8:18", "quote": "The sufferings of this present time are not worth comparing with the glory that will be revealed in us."},
-  {"author": "David Goggins", "quote": "You are in control. Stop letting fear dictate your actions."},
-  {"author": "Psalm 37:5", "quote": "Commit your way to the Lord; trust in Him and He will do this."},
-  {"author": "Marcus Aurelius", "quote": "If someone can show me that what I think or do is not right, I will happily change."},
-  {"author": "Epictetus", "quote": "If you want to improve, be content to be thought foolish and stupid."},
-  {"author": "Proverbs 16:3", "quote": "Commit to the Lord whatever you do, and He will establish your plans."},
-  {"author": "James Clear", "quote": "Motion does not equal progress. Action does."},
-  {"author": "Psalm 73:26", "quote": "My flesh and my heart may fail, but God is the strength of my heart and my portion forever."},
-  {"author": "Seneca", "quote": "It is not the man who has too little, but the man who craves more, that is poor."},
-  {"author": "Philippians 1:6", "quote": "He who began a good work in you will carry it on to completion until the day of Christ Jesus."},
-  {"author": "Jocko Willink", "quote": "Good. That’s your opportunity to get better."},
-  {"author": "Proverbs 24:27", "quote": "Put your outdoor work in order and get your fields ready; after that, build your house."},
-  {"author": "Marcus Aurelius", "quote": "To love only what happens, what was destined. No greater harmony."},
-  {"author": "Psalm 55:16", "quote": "As for me, I call to God, and the Lord saves me."},
-  {"author": "Epictetus", "quote": "Circumstances don’t make the man, they only reveal him to himself."},
-  {"author": "Romans 12:2", "quote": "Do not conform to the pattern of this world, but be transformed by the renewing of your mind."},
-  {"author": "James Clear", "quote": "Success is rarely the result of one massive action. It’s the result of small habits over time."},
-  {"author": "Psalm 37:7", "quote": "Be still before the Lord and wait patiently for Him."},
-  {"author": "Seneca", "quote": "A wise man is content with his lot, whatever it may be."},
-  {"author": "Isaiah 40:31", "quote": "Those who hope in the Lord will renew their strength; they will soar on wings like eagles."},
-  {"author": "David Goggins", "quote": "Pain unlocks a secret doorway in the mind."},
-  {"author": "Proverbs 13:20", "quote": "Walk with the wise and become wise, for a companion of fools suffers harm."},
-  {"author": "Marcus Aurelius", "quote": "You become what you give your attention to."},
-  {"author": "Psalm 119:105", "quote": "Your word is a lamp to my feet and a light to my path."},
-  {"author": "Epictetus", "quote": "No one is ever unhappy because of someone else."},
-  {"author": "James Clear", "quote": "You do not rise to the level of your motivation, you fall to the level of your discipline."},
-  {"author": "Proverbs 27:17", "quote": "As iron sharpens iron, so one person sharpens another."},
-  {"author": "Seneca", "quote": "If you live in harmony with nature, you will never be poor; if you live according to opinion, you will never be rich."},
-  {"author": "Psalm 94:19", "quote": "When anxiety was great within me, Your consolation brought me joy."},
-  {"author": "Marcus Aurelius", "quote": "Be content to seem what you really are."},
-  {"author": "Romans 8:28", "quote": "And we know that in all things God works for the good of those who love Him."},
-  {"author": "Epictetus", "quote": "Man is not worried by real problems so much as by his imagined anxieties about real problems."},
-  {"author": "Proverbs 16:32", "quote": "Better a patient person than a warrior, one with self-control than one who takes a city."},
-  {"author": "Jocko Willink", "quote": "There is no growth without discomfort."},
-  {"author": "Psalm 121:8", "quote": "The Lord will watch over your coming and going both now and forevermore."},
-  {"author": "Seneca", "quote": "He suffers more than necessary who suffers before it is necessary."},
-  {"author": "James Clear", "quote": "You should be more concerned with your current trajectory than your current results."},
-  {"author": "Philippians 4:19", "quote": "My God will meet all your needs according to the riches of His glory in Christ Jesus."},
-  {"author": "Marcus Aurelius", "quote": "The happiness of your life depends upon the quality of your thoughts."},
-  {"author": "Psalm 18:30", "quote": "As for God, His way is perfect; the Lord’s word is flawless."},
-  {"author": "Epictetus", "quote": "Don’t live by what others think of you."},
-  {"author": "Proverbs 21:5", "quote": "The plans of the diligent lead to profit as surely as haste leads to poverty."},
-  {"author": "David Goggins", "quote": "Don’t count the days, make the days count."},
-  {"author": "Psalm 23:6", "quote": "Surely goodness and mercy shall follow me all the days of my life."},
-  {"author": "Seneca", "quote": "To bear trials with a calm mind robs misfortune of its strength."},
-  {"author": "James Clear", "quote": "Don’t be the victim of your environment. Build one that empowers you."},
-  {"author": "Proverbs 14:23", "quote": "All hard work brings a profit, but mere talk leads only to poverty."},
-  {"author": "Marcus Aurelius", "quote": "When you arise in the morning, think of what a privilege it is to be alive, to think, to enjoy, to love."},
-  {"author": "Psalm 33:20", "quote": "We wait in hope for the Lord; He is our help and our shield."},
-  {"author": "Epictetus", "quote": "First say to yourself what you would be; and then do what you have to do."},
-  {"author": "Proverbs 17:22", "quote": "A cheerful heart is good medicine, but a crushed spirit dries up the bones."},
-  {"author": "Jocko Willink", "quote": "There’s no weakness in discipline. Only strength."},
-  {"author": "Psalm 32:8", "quote": "I will instruct you and teach you in the way you should go; I will counsel you with My loving eye on you."},
-  {"author": "Seneca", "quote": "The greater the difficulty, the more glory in surmounting it."},
-  {"author": "James Clear", "quote": "Be patient. Big things come from small beginnings."},
-  {"author": "Romans 12:11", "quote": "Never be lacking in zeal, but keep your spiritual fervor, serving the Lord."},
-  {"author": "Marcus Aurelius", "quote": "Look well into yourself; there is a source of strength which will always spring up if you will always look."},
-  {"author": "Psalm 27:14", "quote": "Wait for the Lord; be strong and take heart and wait for the Lord."},
-  {"author": "Epictetus", "quote": "It’s not what happens, but how you respond, that matters."},
-  {"author": "Proverbs 11:30", "quote": "The fruit of the righteous is a tree of life, and the one who is wise saves lives."},
-  {"author": "David Goggins", "quote": "There is no finish line."}
-  {"author": "Marcus Aurelius", "quote": "Do every act of your life as though it were the very last act of your life."},
-  {"author": "Proverbs 4:23", "quote": "Above all else, guard your heart, for everything you do flows from it."},
-  {"author": "Epictetus", "quote": "No great thing is created suddenly."},
-  {"author": "Psalm 9:10", "quote": "Those who know your name trust in you, for you, Lord, have never forsaken those who seek you."},
-  {"author": "Seneca", "quote": "While we wait for life, life passes."},
-  {"author": "James Clear", "quote": "Start small, stay consistent, and build momentum."},
-  {"author": "Romans 15:13", "quote": "May the God of hope fill you with all joy and peace as you trust in Him."},
-  {"author": "Marcus Aurelius", "quote": "Accept whatever comes to you woven in the pattern of your destiny, for what could more aptly fit your needs?"},
-  {"author": "Jocko Willink", "quote": "Every day is a battle. Win the morning, win the day."},
-  {"author": "Psalm 27:1", "quote": "The Lord is my light and my salvation—whom shall I fear?"},
-  {"author": "Epictetus", "quote": "If you wish to be good, first believe that you are bad."},
-  {"author": "Proverbs 12:24", "quote": "Diligent hands will rule, but laziness ends in forced labor."},
-  {"author": "Seneca", "quote": "It is the power of the mind to be unconquerable."},
-  {"author": "James Clear", "quote": "If you want better results, forget about setting goals. Focus on your system instead."},
-  {"author": "Isaiah 26:3", "quote": "You will keep in perfect peace those whose minds are steadfast, because they trust in you."},
-  {"author": "Marcus Aurelius", "quote": "The soul becomes dyed with the color of its thoughts."},
-  {"author": "Epictetus", "quote": "Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control."},
-  {"author": "Psalm 19:14", "quote": "May these words of my mouth and this meditation of my heart be pleasing in your sight, Lord."},
-  {"author": "David Goggins", "quote": "It’s so easy to be great nowadays, because most people are weak."},
-  {"author": "Proverbs 3:6", "quote": "In all your ways submit to Him, and He will make your paths straight."},
-  {"author": "Seneca", "quote": "Associate with people who are likely to improve you."},
-  {"author": "James Clear", "quote": "You don’t need to be more motivated, you need to be more consistent."},
-  {"author": "Philippians 4:8", "quote": "Whatever is true, noble, right, pure, lovely, admirable—think about such things."},
-  {"author": "Marcus Aurelius", "quote": "When you have trouble getting out of bed, remind yourself: I am rising to do the work of a human being."},
-  {"author": "Epictetus", "quote": "Don’t explain your philosophy. Embody it."},
-  {"author": "Psalm 37:4", "quote": "Take delight in the Lord, and He will give you the desires of your heart."},
-  {"author": "Jocko Willink", "quote": "Get after it. Every single day."},
-  {"author": "Seneca", "quote": "Sometimes even to live is an act of courage."},
-  {"author": "Romans 8:31", "quote": "If God is for us, who can be against us?"},
-  {"author": "James Clear", "quote": "Be the designer of your world, not merely the consumer of it."}
