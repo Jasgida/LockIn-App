@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
+import 'focus_timer_screen.dart'; // ✅ Correct import name
+import 'journal_screen.dart';
 import 'settings_screen.dart';
-import '../providers/theme_model.dart';
-import 'package:provider/provider.dart';
 
 class ShellScreen extends StatefulWidget {
   const ShellScreen({super.key});
@@ -13,13 +14,16 @@ class ShellScreen extends StatefulWidget {
 class ShellScreenState extends State<ShellScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    // replace with your actual pages
-    Center(child: Text("Home Screen")),
+  // ✅ All 4 screens listed here in the same order as your nav bar
+  final List<Widget> _screens = const [
+    HomeScreen(),
+    FocusTimerScreen(), // ✅ match the class name inside focus_time_screen.dart
+    JournalScreen(),
     SettingsScreen(),
   ];
 
-  void _onItemTapped(int index) {
+  // ✅ Makes navigation work from anywhere (e.g., HomeScreen calls shellKey.currentState?.goToTab(1))
+  void goToTab(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -31,16 +35,13 @@ class ShellScreenState extends State<ShellScreen> {
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: goToTab,
+        type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.timer_outlined), label: 'Focus'),
+          BottomNavigationBarItem(icon: Icon(Icons.book_outlined), label: 'Journal'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: 'Settings'),
         ],
       ),
     );
