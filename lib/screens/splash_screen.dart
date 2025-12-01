@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'shell_screen.dart';
 import 'login_screen.dart';
+import 'email_verification_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // ✅ Fade-in animation
+    // Fade animation
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -31,25 +33,39 @@ class _SplashScreenState extends State<SplashScreen>
       curve: Curves.easeInOut,
     );
 
-    // ✅ After delay, check auth state
+    // After delay, check auth state
     Timer(const Duration(seconds: 3), _checkAuthState);
   }
 
   Future<void> _checkAuthState() async {
     final user = FirebaseAuth.instance.currentUser;
+
     if (!mounted) return;
 
-    if (user != null) {
-      // ✅ User logged in → Go to ShellScreen
+    if (user == null) {
+      // 🔥 Not logged in → Login
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const ShellScreen()),
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+      return;
+    }
+
+    // Reload to get updated verification status
+    await user.reload();
+    final refreshedUser = FirebaseAuth.instance.currentUser;
+
+    if (refreshedUser!.emailVerified) {
+      // 🔥 Logged in + verified → Home (Shell)
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const ShellScreen()),
       );
     } else {
-      // 🚪 Not logged in → Go to LoginScreen
+      // 🔥 Logged in but NOT verified → Email Verification Screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
       );
     }
   }
@@ -63,16 +79,15 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9C74F), // your yellow background
+      backgroundColor: const Color(0xFFF9C74F),
       body: FadeTransition(
         opacity: _fadeAnimation,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 🔒 Logo image
               Image.asset(
-                'assets/lock_logo.png', // change to your logo path
+                'assets/icons/icon.png',
                 height: 120,
                 width: 120,
               ),

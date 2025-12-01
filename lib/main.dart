@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
-import 'global_keys.dart'; // ✅ Import your global shellKey
+
+// Providers
 import 'providers/theme_model.dart';
 import 'providers/focus_model.dart';
 import 'providers/journal_model.dart';
-import 'screens/shell_screen.dart';
-import 'screens/login_screen.dart';
-import 'screens/splash_screen.dart';
+
+// Screens
+import 'screens/splash_decider.dart';
+
+// Utils
 import 'utils/quotes_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ✅ Initialize Firebase correctly for all platforms
+  // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // ✅ Prepare daily quotes before app starts
+  // Prepare today's quote
   await QuotesManager.ensureQuotesForToday();
 
-  // ✅ Run the main app with all providers
+  // Run app with all providers
   runApp(
     MultiProvider(
       providers: [
@@ -45,6 +47,7 @@ class LockInApp extends StatelessWidget {
     return Consumer<ThemeModel>(
       builder: (context, theme, _) {
         final scheme = ColorScheme.fromSeed(seedColor: theme.accent);
+
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'LockIn',
@@ -58,9 +61,8 @@ class LockInApp extends StatelessWidget {
             ),
           ),
 
-          // ✅ Start with splash screen instead of StreamBuilder
-          // Splash will automatically route to the right page
-          home: const SplashScreen(),
+          // 🔥 NEW AUTO NAVIGATION SYSTEM
+          home: const SplashDecider(),
         );
       },
     );

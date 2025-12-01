@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../main.dart';
+
 import '../global_keys.dart';
 import '../utils/auth_storage.dart';
+
+// SCREENS
 import 'shell_screen.dart';
 import 'signup_screen.dart';
+import 'forgot_password_screen.dart';
+import 'email_verification_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
   bool _isLoading = false;
   bool _rememberMe = false;
   String? _errorMessage;
@@ -38,67 +43,56 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
+    FocusScope.of(context).unfocus();
+
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
 
-      // ✅ Save credentials if Remember Me is checked
-      if (_rememberMe) {
-        await AuthStorage.saveCredentials(
-          _emailController.text.trim(),
-          _passwordController.text.trim(),
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      final user = credential.user;
+
+      // 🔥 EMAIL NOT VERIFIED? → Redirect to Verification Screen
+      if (user != null && !user.emailVerified) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
         );
+        return;
+      }
+
+      // SAVE OR CLEAR CREDENTIALS
+      if (_rememberMe) {
+        await AuthStorage.saveCredentials(email, password);
       } else {
         await AuthStorage.clearCredentials();
       }
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => ShellScreen(key: shellKey)),
-      );
-    } on FirebaseAuthException catch (e) {
-      String message;
-      switch (e.code) {
-        case 'invalid-email':
-          message = 'Invalid email format.';
-          break;
-        case 'user-not-found':
-          message = 'No account found for this email.';
-          break;
-        case 'wrong-password':
-          message = 'Incorrect password.';
-          break;
-        default:
-          message = e.message ?? 'An unknown error occurred.';
+      // NAVIGATE TO MAIN APP
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => ShellScreen(key: shellKey)),
+        );
       }
+    } on FirebaseAuthException catch (e) {
+      final message = switch (e.code) {
+        'invalid-email' => 'Invalid email format.',
+        'user-not-found' => 'No account found for this email.',
+        'wrong-password' => 'Incorrect password.',
+        _ => e.message ?? 'Login failed. Try again.',
+      };
+
       setState(() => _errorMessage = message);
     } finally {
-      setState(() => _isLoading = false);
-    }
-  }
-
-  Future<void> _resetPassword() async {
-    if (_emailController.text.isEmpty) {
-      setState(() => _errorMessage = "Please enter your email first.");
-      return;
-    }
-
-    try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: _emailController.text.trim());
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password reset email sent.")),
-      );
-    } catch (e) {
-      setState(() => _errorMessage = "Failed to send reset email.");
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -108,93 +102,120 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 60),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Welcome Back 👋',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'Log in to continue your focus journey.',
-                style: TextStyle(color: Colors.grey),
-              ),
-              const SizedBox(height: 40),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(labelText: 'Password'),
-              ),
-              const SizedBox(height: 8),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 50),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Welcome Back 👋',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Log in to continue your focus journey.',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                const SizedBox(height: 40),
 
-              // ✅ Remember me + Forgot password
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+                // EMAIL
+                TextField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email_outlined),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // PASSWORD
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock_outline),
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // REMEMBER + FORGOT PASSWORD
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _rememberMe,
+                          onChanged: (v) =>
+                              setState(() => _rememberMe = v ?? false),
+                        ),
+                        const Text("Remember me"),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const ForgotPasswordScreen()),
+                        );
+                      },
+                      child: const Text("Forgot Password?"),
+                    ),
+                  ],
+                ),
+
+                // ERROR
+                if (_errorMessage != null)
+                  Column(
                     children: [
-                      Checkbox(
-                        value: _rememberMe,
-                        onChanged: (v) => setState(() => _rememberMe = v!),
+                      Text(
+                        _errorMessage!,
+                        style: const TextStyle(color: Colors.red),
                       ),
-                      const Text("Remember me"),
+                      const SizedBox(height: 12),
                     ],
                   ),
-                  TextButton(
-                    onPressed: _resetPassword,
-                    child: const Text("Forgot Password?"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
 
-              if (_errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Text(
-                    _errorMessage!,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
-
-              Center(
-                child: _isLoading
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: _login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: accent,
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(180, 48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                // LOGIN BUTTON
+                Center(
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: _login,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: accent,
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(200, 52),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
                           ),
+                          child: const Text('Log In'),
                         ),
-                        child: const Text('Log In'),
-                      ),
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const SignUpScreen()),
-                    );
-                  },
-                  child: const Text("Don’t have an account? Sign Up"),
                 ),
-              ),
-            ],
+
+                const SizedBox(height: 20),
+
+                // SIGNUP
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const SignUpScreen()),
+                      );
+                    },
+                    child: const Text("Don’t have an account? Sign Up"),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
