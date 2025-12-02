@@ -1,8 +1,9 @@
+// lib/screens/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/focus_model.dart';
 import '../utils/quotes_manager.dart';
-import '../models/quote.dart';
+import '../models/quote.dart';           // ← Make sure this exists
 import '../global_keys.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,8 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _quote = '';
-  String _author = '';
+  String _quote = "Stay focused. Your future is watching.";
+  String _author = "LockIn";
   String _greeting = 'Hey';
   String _todayFocus = '0m';
   int _streak = 0;
@@ -22,30 +23,34 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _loadQuoteAndStats();
+    _loadEverything();
   }
 
-  Future<void> _loadQuoteAndStats() async {
+  Future<void> _loadEverything() async {
+    // This ensures quotes are ready + gets the correct AM/PM quote
     final Quote quoteObj = await QuotesManager.getQuoteForNow();
-    final now = DateTime.now();
-
-    final hour = now.hour;
-    final greeting = (hour < 12)
-        ? 'Good morning,'
-        : (hour < 18)
-            ? 'Good afternoon,'
-            : 'Good evening,';
 
     final focus = Provider.of<FocusModel>(context, listen: false);
     await focus.refreshForDate(DateTime.now());
 
-    setState(() {
-      _quote = quoteObj.quote;
-      _author = quoteObj.author;
-      _greeting = greeting;
-      _todayFocus = '${focus.todayMinutes}m';
-      _streak = focus.streak;
-    });
+    final hour = DateTime.now().hour;
+    final greeting = hour < 12
+        ? 'Good morning,'
+        : hour < 18
+            ? 'Good afternoon,'
+            : 'Good evening,';
+
+    if (mounted) {
+      setState(() {
+        _quote = quoteObj.quote.isNotEmpty
+            ? quoteObj.quote
+            : "Discipline is the bridge between goals and accomplishment.";
+        _author = quoteObj.author.isNotEmpty ? quoteObj.author : "LockIn";
+        _greeting = greeting;
+        _todayFocus = '${focus.todayMinutes}m';
+        _streak = focus.streak;
+      });
+    }
   }
 
   void _startFocus() {
@@ -59,10 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: RefreshIndicator(
-        onRefresh: () async {
-          await QuotesManager.ensureQuotesForToday();
-          await _loadQuoteAndStats();
-        },
+        onRefresh: _loadEverything,
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 22),
           children: [
@@ -76,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                 ),
                 IconButton(
-                  onPressed: () => shellKey.currentState?.goToTab(3), // FIXED
+                  onPressed: () => shellKey.currentState?.goToTab(4), // Settings = tab 4 (with Blocker)
                   icon: const Icon(Icons.settings_outlined),
                 ),
               ],
@@ -88,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            /// FOCUS BUTTON
+            // BIG FOCUS BUTTON
             Center(
               child: GestureDetector(
                 onTap: _startFocus,
@@ -128,13 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Center(
               child: Text(
                 _todayFocus,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -148,45 +146,52 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             Divider(color: Colors.grey[300]),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
             Text(
               'Motivation',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
 
-            /// QUOTE CARD
+            // GORGEOUS QUOTE CARD
             Container(
-              padding: const EdgeInsets.all(14),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: accent.withOpacity(0.06),
-                borderRadius: BorderRadius.circular(12),
+                color: accent.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: accent.withOpacity(0.25), width: 1.5),
               ),
               child: Column(
                 children: [
                   Text(
-                    _quote,
+                    '"$_quote"',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       fontStyle: FontStyle.italic,
+                      height: 1.7,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 16),
                   Text(
-                    "- $_author",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
+                    "— $_author —",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 50),
           ],
         ),
       ),

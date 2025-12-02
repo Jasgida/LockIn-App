@@ -1,3 +1,4 @@
+// lib/screens/splash_screen.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,101 +9,62 @@ import 'email_verification_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _fadeAnimation;
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
-    // Fade animation
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..forward();
-
-    _fadeAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
-
-    // After delay, check auth state
-    Timer(const Duration(seconds: 3), _checkAuthState);
+    Timer(const Duration(seconds: 3), () {
+      if (!mounted) return;
+      _goToNextScreen();
+    });
   }
 
-  Future<void> _checkAuthState() async {
+  void _goToNextScreen() {
     final user = FirebaseAuth.instance.currentUser;
 
-    if (!mounted) return;
-
+    Widget nextScreen;
     if (user == null) {
-      // 🔥 Not logged in → Login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
-      return;
-    }
-
-    // Reload to get updated verification status
-    await user.reload();
-    final refreshedUser = FirebaseAuth.instance.currentUser;
-
-    if (refreshedUser!.emailVerified) {
-      // 🔥 Logged in + verified → Home (Shell)
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const ShellScreen()),
-      );
+      nextScreen = const LoginScreen();
+    } else if (user.emailVerified) {
+      nextScreen = const ShellScreen();
     } else {
-      // 🔥 Logged in but NOT verified → Email Verification Screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
-      );
+      nextScreen = const EmailVerificationScreen();
     }
-  }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => nextScreen,
+        transitionDuration: const Duration(milliseconds: 300),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF9C74F),
-      body: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/icons/icon.png',
-                height: 120,
-                width: 120,
+    return const Scaffold(
+      backgroundColor: Color(0xFFF9C74F),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Replace with your real asset path
+            Image(image: AssetImage('assets/icons/icon.png'), width: 120, height: 120),
+            SizedBox(height: 30),
+            Text(
+              'LockIn',
+              style: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'LockIn',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                  letterSpacing: 1.5,
-                ),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: 80),
+            CircularProgressIndicator(color: Colors.black54),
+          ],
         ),
       ),
     );

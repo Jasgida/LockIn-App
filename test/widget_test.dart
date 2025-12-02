@@ -1,30 +1,24 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+// This is a basic smoke test for LockIn app
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:lockin_app/main.dart';
+import 'package:lockin_app/main.dart';  // This imports your real app
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('LockIn app launches successfully', (WidgetTester tester) async {
+    // Build your actual app
+    await tester.pumpWidget(const LockInApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Just check that the app launches without crashing
+    // (This is enough for a basic smoke test)
+    expect(find.byType(MaterialApp), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Optional: Check for a widget you know exists in your app
+    // For example, if you have a title "LockIn" somewhere:
+    // expect(find.textContaining('LockIn'), findsWidgets);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Or check for Login screen elements if you're not logged in
+    expect(find.byType(CircularProgressIndicator), findsOneWidget); // during Firebase init
+    // or later:
+    // expect(find.text('Welcome'), findsOneWidget);
   });
 }

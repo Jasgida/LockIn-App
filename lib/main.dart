@@ -1,38 +1,36 @@
+// lib/main.dart
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
-
-// Providers
 import 'providers/theme_model.dart';
 import 'providers/focus_model.dart';
 import 'providers/journal_model.dart';
-
-// Screens
-import 'screens/splash_decider.dart';
-
-// Utils
+import 'providers/blocker_provider.dart';
+import 'screens/shell_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/email_verification_screen.dart';
 import 'utils/quotes_manager.dart';
 
-Future<void> main() async {
+// THIS LINE IS THE ONLY CORRECT WAY — DO NOT TOUCH
+import 'services/pin_overlay_service.dart' if (dart.library.html) 'services/pin_overlay_stub.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  QuotesManager.ensureQuotesForToday();
 
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  // Prepare today's quote
-  await QuotesManager.ensureQuotesForToday();
-
-  // Run app with all providers
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeModel()),
         ChangeNotifierProvider(create: (_) => JournalModel()),
         ChangeNotifierProvider(create: (_) => FocusModel()),
+        ChangeNotifierProvider(create: (_) => BlockerProvider()),
       ],
       child: const LockInApp(),
     ),
@@ -46,24 +44,66 @@ class LockInApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeModel>(
       builder: (context, theme, _) {
-        final scheme = ColorScheme.fromSeed(seedColor: theme.accent);
-
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'LockIn',
           theme: ThemeData(
             fontFamily: 'Inter',
-            colorScheme: scheme,
+            colorScheme: ColorScheme.fromSeed(seedColor: theme.accent),
             useMaterial3: true,
-            appBarTheme: AppBarTheme(
-              backgroundColor: scheme.primary,
-              foregroundColor: scheme.onPrimary,
-            ),
           ),
-
-          // 🔥 NEW AUTO NAVIGATION SYSTEM
-          home: const SplashDecider(),
+          home: const AuthWrapper(),
         );
+      },
+    );
+  }
+}
+
+class AuthWrapper extends StatefulWidget {
+  const AuthWrapper({super.key});
+  @override
+  State<AuthWrapper> createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  StreamSubscription<User?>? _authSub;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // ONLY ON REAL ANDROID DEVICES → START THE UNBREAKABLE PIN LOCK
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      _authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+        if (user != null && user.emailVerified) {
+          PinOverlayService().start();
+        } else {
+          PinOverlayService().stop();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _authSub?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
+
+        final user = snapshot.data;
+        if (user == null) return const LoginScreen();
+        if (!user.emailVerified) return const EmailVerificationScreen();
+
+        return const ShellScreen();
       },
     );
   }
