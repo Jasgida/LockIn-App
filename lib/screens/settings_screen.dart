@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../providers/theme_model.dart';
-import '../global_keys.dart';
 import 'login_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -20,7 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final TextEditingController _pinController = TextEditingController();
   final TextEditingController _confirmPinController = TextEditingController();
 
-  String? _currentPin; // Will load from SharedPreferences
+  String? _currentPin;
 
   @override
   void initState() {
@@ -40,7 +39,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await prefs.setString('lockin_pin', pin);
     setState(() => _currentPin = pin);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("PIN saved successfully!"), backgroundColor: Colors.green),
+      const SnackBar(
+        content: Text("PIN saved successfully!"),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 
@@ -70,7 +73,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 counterText: "",
                 filled: true,
                 fillColor: Colors.grey[100],
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
             ),
             const SizedBox(height: 12),
@@ -86,22 +92,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 counterText: "",
                 filled: true,
                 fillColor: Colors.grey[100],
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text("Cancel"),
+          ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
             onPressed: () {
               final pin = _pinController.text;
               final confirm = _confirmPinController.text;
 
               if (pin.isEmpty || confirm.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Please enter both fields"), backgroundColor: Colors.red),
+                  const SnackBar(content: Text("Please fill both fields"), backgroundColor: Colors.red),
                 );
                 return;
               }
@@ -130,6 +144,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  void _openColorPicker(BuildContext context, ThemeModel theme) {
+    Color tempColor = theme.accent;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Pick Your Accent Color"),
+        content: SingleChildScrollView(
+          child: ColorPicker(
+            pickerColor: tempColor,
+            onColorChanged: (c) => tempColor = c,
+            enableAlpha: false,
+            showLabel: true,
+            pickerAreaHeightPercent: 0.8,
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
+          ElevatedButton(
+            onPressed: () {
+              theme.setAccent(tempColor);
+              Navigator.pop(ctx);
+            },
+            child: const Text("Save"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();
+    if (!mounted) return;
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeModel>(context);
@@ -144,9 +197,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Settings", style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+                Text(
+                  "Settings",
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
                 IconButton(
-                  onPressed: () => shellKey.currentState?.goToTab(0),
+                  onPressed: () => Navigator.pop(context), // CLEAN & SIMPLE
                   icon: const Icon(Icons.close),
                 ),
               ],
@@ -170,7 +226,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ACCENT COLOR PICKER
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(color: accent.withOpacity(0.08), borderRadius: BorderRadius.circular(16)),
+              decoration: BoxDecoration(
+                color: accent.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -191,7 +250,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text("Dark Mode", style: TextStyle(fontSize: 16)),
-                Switch(value: theme.isDark, activeColor: accent, onChanged: (v) => theme.setDarkMode(v)),
+                Switch(
+                  value: theme.isDark,
+                  activeColor: accent,
+                  onChanged: (v) => theme.setDarkMode(v),
+                ),
               ],
             ),
             const SizedBox(height: 30),
@@ -202,14 +265,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
               decoration: BoxDecoration(
                 color: _currentPin != null ? Colors.green.withOpacity(0.1) : Colors.orange.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: _currentPin != null ? Colors.green : Colors.orange, width: 1.5),
+                border: Border.all(
+                  color: _currentPin != null ? Colors.green : Colors.orange,
+                  width: 1.5,
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Icon(_currentPin != null ? Icons.lock : Icons.lock_open, color: _currentPin != null ? Colors.green : Colors.orange),
+                      Icon(
+                        _currentPin != null ? Icons.lock : Icons.lock_open,
+                        color: _currentPin != null ? Colors.green : Colors.orange,
+                      ),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,8 +294,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   ElevatedButton(
                     onPressed: _showPinDialog,
-                    style: ElevatedButton.styleFrom(backgroundColor: _currentPin != null ? Colors.green : Colors.orange),
-                    child: Text(_currentPin != null ? "Change" : "Set PIN", style: const TextStyle(color: Colors.white)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _currentPin != null ? Colors.green : Colors.orange,
+                    ),
+                    child: Text(
+                      _currentPin != null ? "Change" : "Set PIN",
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -249,49 +323,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 50),
 
             // VERSION
-            Center(child: Text("LockIn v1.0 • Unbreakable", style: TextStyle(color: Colors.grey[600]))),
+            Center(
+              child: Text(
+                "LockIn v1.0 • Unbreakable",
+                style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              ),
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  // COLOR PICKER
-  void _openColorPicker(BuildContext context, ThemeModel theme) {
-    Color tempColor = theme.accent;
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text("Pick Your Vibe"),
-        content: SingleChildScrollView(
-          child: ColorPicker(
-            pickerColor: tempColor,
-            onColorChanged: (c) => tempColor = c,
-            enableAlpha: false,
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
-          ElevatedButton(
-            onPressed: () {
-              theme.setAccent(tempColor);
-              Navigator.pop(ctx);
-            },
-            child: const Text("Save"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // LOGOUT
-  Future<void> _logout() async {
-    await FirebaseAuth.instance.signOut();
-    if (!mounted) return;
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
-      (route) => false,
     );
   }
 }

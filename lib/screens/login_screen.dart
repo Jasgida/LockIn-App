@@ -1,7 +1,7 @@
+// lib/screens/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../global_keys.dart';
 import '../utils/auth_storage.dart';
 
 // SCREENS
@@ -59,8 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final user = credential.user;
 
-      // 🔥 EMAIL NOT VERIFIED? → Redirect to Verification Screen
+      // EMAIL NOT VERIFIED? → Go to verification screen
       if (user != null && !user.emailVerified) {
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
@@ -68,29 +69,32 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
 
-      // SAVE OR CLEAR CREDENTIALS
+      // Save or clear credentials
       if (_rememberMe) {
         await AuthStorage.saveCredentials(email, password);
       } else {
         await AuthStorage.clearCredentials();
       }
 
-      // NAVIGATE TO MAIN APP
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => ShellScreen(key: shellKey)),
-        );
-      }
+      // SUCCESS → GO TO MAIN APP
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const ShellScreen()), // ← NO KEY NEEDED
+      );
     } on FirebaseAuthException catch (e) {
-      final message = switch (e.code) {
-        'invalid-email' => 'Invalid email format.',
-        'user-not-found' => 'No account found for this email.',
-        'wrong-password' => 'Incorrect password.',
-        _ => e.message ?? 'Login failed. Try again.',
-      };
-
-      setState(() => _errorMessage = message);
+      setState(() {
+        _errorMessage = switch (e.code) {
+          'invalid-email' => 'Invalid email format.',
+          'user-not-found' => 'No account found for this email.',
+          'wrong-password' => 'Incorrect password.',
+          'user-disabled' => 'This account has been disabled.',
+          'too-many-requests' => 'Too many attempts. Try again later.',
+          _ => e.message ?? 'Login failed. Please try again.',
+        };
+      });
+    } catch (e) {
+      setState(() => _errorMessage = 'An unexpected error occurred.');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -110,39 +114,41 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Welcome Back 👋',
+                  'Welcome Back',
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                const Text(
+                Text(
                   'Log in to continue your focus journey.',
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 15),
                 ),
                 const SizedBox(height: 40),
 
-                // EMAIL
+                // EMAIL FIELD
                 TextField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Email',
-                    prefixIcon: Icon(Icons.email_outlined),
+                    prefixIcon: const Icon(Icons.email_outlined),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
                 const SizedBox(height: 16),
 
-                // PASSWORD
+                // PASSWORD FIELD
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Password',
-                    prefixIcon: Icon(Icons.lock_outline),
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
 
-                // REMEMBER + FORGOT PASSWORD
+                // REMEMBER ME + FORGOT PASSWORD
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -150,68 +156,81 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Checkbox(
                           value: _rememberMe,
-                          onChanged: (v) =>
-                              setState(() => _rememberMe = v ?? false),
+                          onChanged: (v) => setState(() => _rememberMe = v ?? false),
+                          activeColor: accent,
                         ),
                         const Text("Remember me"),
                       ],
                     ),
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const ForgotPasswordScreen()),
-                        );
-                      },
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
+                      ),
                       child: const Text("Forgot Password?"),
                     ),
                   ],
                 ),
 
-                // ERROR
+                // ERROR MESSAGE
                 if (_errorMessage != null)
-                  Column(
-                    children: [
-                      Text(
-                        _errorMessage!,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                      const SizedBox(height: 12),
-                    ],
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    margin: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.red.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.red.shade200),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error_outline, color: Colors.red),
+                        const SizedBox(width: 10),
+                        Expanded(child: Text(_errorMessage!, style: const TextStyle(color: Colors.red))),
+                      ],
+                    ),
                   ),
 
+                const SizedBox(height: 20),
+
                 // LOGIN BUTTON
-                Center(
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
                   child: _isLoading
-                      ? const CircularProgressIndicator()
+                      ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: _login,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: accent,
                             foregroundColor: Colors.white,
-                            minimumSize: const Size(200, 52),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                           ),
-                          child: const Text('Log In'),
+                          child: const Text('Log In', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                         ),
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
-                // SIGNUP
+                // SIGN UP LINK
                 Center(
                   child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const SignUpScreen()),
-                      );
-                    },
-                    child: const Text("Don’t have an account? Sign Up"),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SignUpScreen()),
+                    ),
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(color: Colors.grey[700]),
+                        children: const [
+                          TextSpan(text: "Don't have an account? "),
+                          TextSpan(
+                            text: "Sign Up",
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],

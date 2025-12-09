@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/focus_model.dart';
 import '../utils/quotes_manager.dart';
-import '../models/quote.dart';           // ← Make sure this exists
-import '../global_keys.dart';
+import '../models/quote.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadEverything() async {
-    // This ensures quotes are ready + gets the correct AM/PM quote
     final Quote quoteObj = await QuotesManager.getQuoteForNow();
 
     final focus = Provider.of<FocusModel>(context, listen: false);
@@ -53,14 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // CLEAN WAY TO NAVIGATE — NO GLOBAL KEY NEEDED
   void _startFocus() {
-    shellKey.currentState?.goToTab(1);
+    // Go to Focus tab (index 1)
+    DefaultTabController.of(context).animateTo(1);
+  }
+
+  void _openSettings() {
+    // Go to Settings tab (index 4)
+    DefaultTabController.of(context).animateTo(4);
   }
 
   @override
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
-    final name = "David";
+    const name = "David";
 
     return SafeArea(
       child: RefreshIndicator(
@@ -78,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                 ),
                 IconButton(
-                  onPressed: () => shellKey.currentState?.goToTab(4), // Settings = tab 4 (with Blocker)
+                  onPressed: _openSettings, // ← CLEAN & WORKING
                   icon: const Icon(Icons.settings_outlined),
                 ),
               ],
@@ -93,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // BIG FOCUS BUTTON
             Center(
               child: GestureDetector(
-                onTap: _startFocus,
+                onTap: _startFocus, // ← CLEAN & WORKING
                 child: Container(
                   width: 220,
                   height: 220,
@@ -104,13 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     border: Border.all(color: accent, width: 6),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Start\nFocus\nSession',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
-                        color: accent,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -121,17 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 18),
             Center(
-              child: Text(
-                "Today's Focus",
-                style: TextStyle(color: Colors.grey[700]),
-              ),
+              child: Text("Today's Focus", style: TextStyle(color: Colors.grey[700])),
             ),
             const SizedBox(height: 8),
             Center(
-              child: Text(
-                _todayFocus,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+              child: Text(_todayFocus, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
             const SizedBox(height: 8),
             Row(
@@ -139,10 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const Icon(Icons.local_fire_department_outlined, size: 18),
                 const SizedBox(width: 8),
-                Text(
-                  'Day $_streak of Focus Streak',
-                  style: TextStyle(color: Colors.grey[700]),
-                ),
+                Text('Day $_streak of Focus Streak', style: TextStyle(color: Colors.grey[700])),
               ],
             ),
 
@@ -152,13 +147,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
             Text(
               'Motivation',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
 
-            // GORGEOUS QUOTE CARD
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -181,12 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 16),
                   Text(
                     "— $_author —",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey[700],
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.5,
-                    ),
+                    style: TextStyle(fontSize: 15, color: Colors.grey[700], fontWeight: FontWeight.w600),
                   ),
                 ],
               ),

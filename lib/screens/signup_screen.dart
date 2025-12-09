@@ -1,9 +1,9 @@
+// lib/screens/signup_screen.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../global_keys.dart';
 import 'login_screen.dart';
-import 'email_verification_screen.dart'; // 🔥 IMPORTANT
+import 'email_verification_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -19,7 +19,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _isLoading = false;
   String? _errorMessage;
-  String? _successMessage;
 
   @override
   void dispose() {
@@ -33,13 +32,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     FocusScope.of(context).unfocus();
 
     final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    final confirm = _confirmController.text.trim();
+    final password = _passwordController.text;
+    final confirm = _confirmController.text;
 
-    setState(() {
-      _errorMessage = null;
-      _successMessage = null;
-    });
+    setState(() => _errorMessage = null);
 
     if (email.isEmpty || password.isEmpty || confirm.isEmpty) {
       setState(() => _errorMessage = "All fields are required.");
@@ -59,32 +55,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // SEND VERIFICATION EMAIL
-      await credential.user!.sendEmailVerification();
+      final user = credential.user;
+      if (user == null) return;
 
-      // 🔥 REDIRECT TO EMAIL VERIFICATION SCREEN
-      Navigator.pushReplacement(
+      // Send verification email
+      await user.sendEmailVerification();
+
+      if (!mounted) return;
+
+      // Go to verification screen
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(
-          builder: (_) => EmailVerificationScreen(),
-        ),
+        MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
+        (route) => false,
       );
-
     } on FirebaseAuthException catch (e) {
-      final message = switch (e.code) {
-        'email-already-in-use' => 'This email is already registered.',
-        'invalid-email' => 'Invalid email format.',
-        'weak-password' => 'Password is too weak.',
-        _ => e.message ?? 'Signup failed. Try again.',
-      };
-
-      setState(() => _errorMessage = message);
+      setState(() {
+        _errorMessage = switch (e.code) {
+          'email-already-in-use' => 'This email is already registered.',
+          'invalid-email' => 'Invalid email format.',
+          'weak-password' => 'Password is too weak.',
+          'operation-not-allowed' => 'Sign up is currently disabled.',
+          _ => e.message ?? 'Sign up failed. Please try again.',
+        };
+      });
+    } catch (e) {
+      setState(() => _errorMessage = 'An unexpected error occurred.');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -100,95 +101,137 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "Create Account 🎉",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  "Create Account",
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Sign up to begin your journey.",
-                  style: TextStyle(color: Colors.grey),
+                Text(
+                  "Join LockIn and master your focus.",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 16),
                 ),
-                const SizedBox(height: 35),
+                const SizedBox(height: 40),
 
                 // EMAIL
                 TextField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
                     labelText: "Email",
-                    prefixIcon: Icon(Icons.email_outlined),
+                    prefixIcon: const Icon(Icons.email_outlined),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                    filled: true,
+                    fillColor: Colors.grey[50],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
 
                 // PASSWORD
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
                     labelText: "Password",
-                    prefixIcon: Icon(Icons.lock_outline),
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                    filled: true,
+                    fillColor: Colors.grey[50],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
 
                 // CONFIRM PASSWORD
                 TextField(
                   controller: _confirmController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (_) => _signup(),
+                  decoration: InputDecoration(
                     labelText: "Confirm Password",
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                    filled: true,
+                    fillColor: Colors.grey[50],
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
 
-                // ERROR
+                // ERROR MESSAGE
                 if (_errorMessage != null)
-                  Text(
-                    _errorMessage!,
-                    style: const TextStyle(color: Colors.red),
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.red.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.red.shade200),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error_outline, color: Colors.red),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            _errorMessage!,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 30),
 
                 // SIGN UP BUTTON
-                Center(
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
                   child: _isLoading
-                      ? const CircularProgressIndicator()
+                      ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: _signup,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: accent,
                             foregroundColor: Colors.white,
-                            minimumSize: const Size(200, 52),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                           ),
-                          child: const Text("Sign Up"),
+                          child: const Text(
+                            "Create Account",
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
                         ),
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
-                // LOGIN NAVIGATION
+                // LOGIN LINK
                 Center(
                   child: TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                            builder: (_) => const LoginScreen()),
+                        MaterialPageRoute(builder: (_) => const LoginScreen()),
                       );
                     },
-                    child: const Text("Already have an account? Log In"),
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(color: Colors.grey[700], fontSize: 15),
+                        children: const [
+                          TextSpan(text: "Already have an account? "),
+                          TextSpan(
+                            text: "Log In",
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
