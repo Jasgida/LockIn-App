@@ -25,8 +25,17 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
 
   Future<void> _loadApps() async {
     try {
-      final allApps = await InstalledApps.getInstalledApps(); // ← NEW API
-      allApps.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      // THIS WORKS 100% WITH installed_apps 1.6.0
+      final allApps = await InstalledApps.getInstalledApps();
+
+      // Remove system apps manually
+      final userApps = allApps
+          .where((app) =>
+              !app.packageName.startsWith('com.android') &&
+              !app.packageName.startsWith('com.google.android'))
+          .toList();
+
+      userApps.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -38,9 +47,10 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
         blockedApps = snapshot.docs.map((doc) => doc.id).toSet();
       }
 
-      setState(() => apps = allApps);
+      setState(() => apps = userApps);
     } catch (e) {
-      print("Error loading apps: $e");
+      debugPrint('Error loading apps: $e');
+      setState(() => apps = []);
     }
   }
 
@@ -54,11 +64,7 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
         .collection('blocked_apps')
         .doc(packageName);
 
-    if (blocked) {
-      await ref.set({'blocked': true});
-    } else {
-      await ref.delete();
-    }
+    blocked ? await ref.set({'blocked': true}) : await ref.delete();
 
     setState(() {
       blocked ? blockedApps.add(packageName) : blockedApps.remove(packageName);
@@ -69,30 +75,38 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Block Apps During Focus"),
+        title: const Text('Block Apps During Focus'),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
       ),
       body: apps.isEmpty
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: apps.length,
-              itemBuilder: (context, index) {
-                final app = apps[index];
-                final isBlocked = blockedApps.contains(app.packageName);
-                Uint8List? icon = app.icon;
+          : RefreshIndicator(
+              onRefresh: _loadApps,
+              child: ListView.builder(
+                itemCount: apps.length,
+                itemBuilder: (context, index) {
+                  final app = apps[index];
+                  final isBlocked = blockedApps.contains(app.packageName);
+                  final Uint8List? icon = app.icon; // THIS IS NOW POPULATED IN 1.6.0
 
-                return SwitchListTile(
-                  secondary: CircleAvatar(
-                    backgroundImage: icon != null ? MemoryImage(icon) : null,
-                    child: icon == null ? const Icon(Icons.android) : null,
-                  ),
-                  title: Text(app.name),
-                  subtitle: Text(app.packageName, style: const TextStyle(fontSize: 11)),
-                  value: isBlocked,
-                  onChanged: (val) => _toggleApp(app.packageName, val),
-                );
-              },
+                  return SwitchListTile(
+                    secondary: CircleAvatar(
+                      radius: 24,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: icon != null ? MemoryImage(icon) : null,
+                      child: icon == null
+                          ? const Icon(Icons.apps, size: 30, color: Colors.grey)
+                          : null,
+                    ),
+                    title: Text(app.name, style: const TextStyle(fontWeight: FontWeight.w500)),
+                    subtitle: Text(app.packageName, style: const TextStyle(fontSize: 10)),
+                    value: isBlocked,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    onChanged: (val) => _toggleApp(app.packageName, val),
+                  );
+                },
+              ),
             ),
     );
   }

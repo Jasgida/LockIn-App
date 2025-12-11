@@ -18,7 +18,6 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   final TextEditingController _pinController = TextEditingController();
   final TextEditingController _confirmPinController = TextEditingController();
-
   String? _currentPin;
 
   @override
@@ -38,6 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('lockin_pin', pin);
     setState(() => _currentPin = pin);
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text("PIN saved successfully!"),
@@ -101,17 +101,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
             onPressed: () {
-              final pin = _pinController.text;
-              final confirm = _confirmPinController.text;
+              final pin = _pinController.text.trim();
+              final confirm = _confirmPinController.text.trim();
 
               if (pin.isEmpty || confirm.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -119,14 +114,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
                 return;
               }
-
               if (pin != confirm) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("PINs do not match!"), backgroundColor: Colors.red),
                 );
                 return;
               }
-
               if (pin.length != 4) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("PIN must be 4 digits"), backgroundColor: Colors.orange),
@@ -144,8 +137,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  void _openColorPicker(BuildContext context, ThemeModel theme) {
+  void _openColorPicker() {
+    final theme = Provider.of<ThemeModel>(context, listen: false);
     Color tempColor = theme.accent;
+
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -153,7 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         content: SingleChildScrollView(
           child: ColorPicker(
             pickerColor: tempColor,
-            onColorChanged: (c) => tempColor = c,
+            onColorChanged: (color) => tempColor = color,
             enableAlpha: false,
             showLabel: true,
             pickerAreaHeightPercent: 0.8,
@@ -163,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
           ElevatedButton(
             onPressed: () {
-              theme.setAccent(tempColor);
+              theme.setAccentColor(tempColor);
               Navigator.pop(ctx);
             },
             child: const Text("Save"),
@@ -193,43 +188,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
           children: [
-            // HEADER
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Settings",
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                  onPressed: () => Navigator.pop(context), // CLEAN & SIMPLE
-                  icon: const Icon(Icons.close),
-                ),
+                Text("Settings", style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+                IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)),
               ],
             ),
             const SizedBox(height: 25),
 
-            // ACCENT COLOR PREVIEW
             Center(
               child: Container(
                 width: 90,
                 height: 90,
-                decoration: BoxDecoration(
-                  color: accent,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.black12, width: 2),
-                ),
+                decoration: BoxDecoration(color: accent, shape: BoxShape.circle, border: Border.all(color: Colors.black12, width: 2)),
               ),
             ),
             const SizedBox(height: 25),
 
-            // ACCENT COLOR PICKER
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: accent.withOpacity(0.08),
-                borderRadius: BorderRadius.circular(16),
-              ),
+              decoration: BoxDecoration(color: accent.withOpacity(0.08), borderRadius: BorderRadius.circular(16)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -238,14 +217,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ElevatedButton.icon(
                     icon: const Icon(Icons.color_lens_outlined),
                     label: const Text("Choose Color"),
-                    onPressed: () => _openColorPicker(context, theme),
+                    onPressed: _openColorPicker,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 30),
 
-            // DARK MODE
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -253,61 +231,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Switch(
                   value: theme.isDark,
                   activeColor: accent,
-                  onChanged: (v) => theme.setDarkMode(v),
+                  onChanged: (value) => theme.toggleDarkMode(),
                 ),
               ],
             ),
             const SizedBox(height: 30),
 
-            // PIN LOCK SETUP
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: _currentPin != null ? Colors.green.withOpacity(0.1) : Colors.orange.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: _currentPin != null ? Colors.green : Colors.orange,
-                  width: 1.5,
-                ),
+                border: Border.all(color: _currentPin != null ? Colors.green : Colors.orange, width: 1.5),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Icon(
-                        _currentPin != null ? Icons.lock : Icons.lock_open,
-                        color: _currentPin != null ? Colors.green : Colors.orange,
-                      ),
+                      Icon(_currentPin != null ? Icons.lock : Icons.lock_open,
+                          color: _currentPin != null ? Colors.green : Colors.orange),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text("App Lock PIN", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                          Text(
-                            _currentPin != null ? "•••• (Set)" : "Not set",
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
+                          Text(_currentPin != null ? "•••• (Set)" : "Not set", style: TextStyle(color: Colors.grey[600])),
                         ],
                       ),
                     ],
                   ),
                   ElevatedButton(
                     onPressed: _showPinDialog,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _currentPin != null ? Colors.green : Colors.orange,
-                    ),
-                    child: Text(
-                      _currentPin != null ? "Change" : "Set PIN",
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                    style: ElevatedButton.styleFrom(backgroundColor: _currentPin != null ? Colors.green : Colors.orange),
+                    child: Text(_currentPin != null ? "Change" : "Set PIN", style: const TextStyle(color: Colors.white)),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 40),
 
-            // LOGOUT
             ElevatedButton.icon(
               icon: const Icon(Icons.logout),
               label: const Text("Log Out"),
@@ -322,12 +285,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             const SizedBox(height: 50),
 
-            // VERSION
             Center(
-              child: Text(
-                "LockIn v1.0 • Unbreakable",
-                style: TextStyle(color: Colors.grey[600], fontSize: 14),
-              ),
+              child: Text("LockIn v1.0 • Unbreakable", style: TextStyle(color: Colors.grey[600], fontSize: 14)),
             ),
           ],
         ),

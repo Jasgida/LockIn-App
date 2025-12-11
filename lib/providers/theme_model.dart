@@ -1,40 +1,40 @@
+// lib/providers/theme_model.dart
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeModel extends ChangeNotifier {
-  Color _accent = const Color(0xFF2FB3A6);
+  static const String _darkModeKey = 'dark_mode';
+  static const String _accentColorKey = 'accent_color';
+
   bool _isDark = false;
+  Color _accent = const Color(0xFF00C853); // Default green
 
-  Color get accent => _accent;
   bool get isDark => _isDark;
-
-  static const _prefsKey = 'lockin_theme_color';
-  static const _darkKey = 'lockin_dark_mode';
+  Color get accent => _accent;
 
   ThemeModel() {
     _loadFromPrefs();
   }
 
   Future<void> _loadFromPrefs() async {
-    final p = await SharedPreferences.getInstance();
-    final v = p.getInt(_prefsKey);
-    if (v != null) _accent = Color(v);
-
-    _isDark = p.getBool(_darkKey) ?? false;
+    final prefs = await SharedPreferences.getInstance();
+    _isDark = prefs.getBool(_darkModeKey) ?? false;
+    final savedColor = prefs.getInt(_accentColorKey);
+    if (savedColor != null) _accent = Color(savedColor);
     notifyListeners();
   }
 
-  Future<void> setAccent(Color c) async {
-    _accent = c;
+  Future<void> toggleDarkMode() async {
+    _isDark = !_isDark;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_darkModeKey, _isDark);
     notifyListeners();
-    final p = await SharedPreferences.getInstance();
-    await p.setInt(_prefsKey, c.value);
   }
 
-  Future<void> setDarkMode(bool value) async {
-    _isDark = value;
+  Future<void> setAccentColor(Color color) async {
+    _accent = color;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_accentColorKey, color.value);
     notifyListeners();
-    final p = await SharedPreferences.getInstance();
-    await p.setBool(_darkKey, value);
   }
 }

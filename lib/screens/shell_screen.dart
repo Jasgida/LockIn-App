@@ -13,7 +13,6 @@ class ShellScreen extends StatefulWidget {
   State<ShellScreen> createState() => _ShellScreenState();
 }
 
-// THIS NAME MUST BE _ShellScreenState (with underscore)
 class _ShellScreenState extends State<ShellScreen> {
   int _selectedIndex = 0;
 
@@ -29,12 +28,23 @@ class _ShellScreenState extends State<ShellScreen> {
     setState(() => _selectedIndex = index);
   }
 
+  // THIS IS THE MAGIC METHOD YOUR HOME SCREEN WILL CALL
+  void goToTab(int index) {
+    setState(() => _selectedIndex = index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: _screens,
+        children: _screens.map((screen) {
+          // Wrap HomeScreen so it can call goToTab()
+          if (screen is HomeScreen) {
+            return HomeScreenWithNavigation(goToTab: goToTab);
+          }
+          return screen;
+        }).toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -51,5 +61,17 @@ class _ShellScreenState extends State<ShellScreen> {
         ],
       ),
     );
+  }
+}
+
+// NEW WRAPPER SO HOME SCREEN CAN CALL goToTab()
+class HomeScreenWithNavigation extends StatelessWidget {
+  final void Function(int) goToTab;
+
+  const HomeScreenWithNavigation({super.key, required this.goToTab});
+
+  @override
+  Widget build(BuildContext context) {
+    return HomeScreen(goToTab: goToTab);
   }
 }
