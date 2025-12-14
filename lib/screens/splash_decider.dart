@@ -1,93 +1,59 @@
-// lib/screens/splash_decider.dart
+// lib/screens/shell_screen.dart
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'home_screen.dart';
+import 'focus_timer_screen.dart';
+import 'journal_screen.dart';
+import 'app_blocker_screen.dart';
+import 'settings_screen.dart';
 
-import 'login_screen.dart';
-import 'shell_screen.dart';
-import 'email_verification_screen.dart';
-
-class SplashDecider extends StatefulWidget {
-  const SplashDecider({super.key});
+class ShellScreen extends StatefulWidget {
+  const ShellScreen({super.key});
 
   @override
-  State<SplashDecider> createState() => _SplashDeciderState();
+  State<ShellScreen> createState() => _ShellScreenState();
 }
 
-class _SplashDeciderState extends State<SplashDecider> {
-  @override
-  void initState() {
-    super.initState();
-    _checkAuthAndNavigate();
-  }
+class _ShellScreenState extends State<ShellScreen> {
+  int _index = 0;
 
-  Future<void> _checkAuthAndNavigate() async {
-    // Small delay for smooth splash feel
-    await Future.delayed(const Duration(milliseconds: 1200));
-
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user == null) {
-      // Not logged in → Login
-      _navigateTo(const LoginScreen());
-      return;
-    }
-
-    // Force refresh user data
-    await user.reload();
-    final refreshedUser = FirebaseAuth.instance.currentUser;
-
-    if (refreshedUser == null) {
-      _navigateTo(const LoginScreen());
-      return;
-    }
-
-    if (refreshedUser.emailVerified) {
-      // Fully verified → Main app
-      _navigateTo(const ShellScreen()); // ← NO KEY NEEDED
-    } else {
-      // Logged in but not verified → Verification screen
-      _navigateTo(const EmailVerificationScreen());
-    }
-  }
-
-  void _navigateTo(Widget screen) {
-    if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => screen),
-    );
-  }
+  final screens = [
+    const HomeScreen(),
+    const FocusTimerScreen(),
+    const JournalScreen(),
+    const AppBlockerScreen(),
+    const SettingsScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final accent = Theme.of(context).colorScheme.primary;
+
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // You can add your logo here later
-            const Text(
-              "LockIn",
-              style: TextStyle(
-                fontSize: 42,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 2,
-              ),
-            ),
-            const SizedBox(height: 40),
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Theme.of(context).colorScheme.primary,
-              ),
-              strokeWidth: 3,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Preparing your focus fortress...",
-              style: TextStyle(color: Colors.white70, fontSize: 16),
-            ),
-          ],
+      body: screens[_index],
+      extendBody: true,
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 20)],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: BottomNavigationBar(
+            currentIndex: _index,
+            onTap: (i) => setState(() => _index = i),
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.grey[900] : Colors.white,
+            selectedItemColor: accent,
+            unselectedItemColor: Colors.grey,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: "Home"),
+              BottomNavigationBarItem(icon: Icon(Icons.timer_rounded), label: "Focus"),
+              BottomNavigationBarItem(icon: Icon(Icons.book_rounded), label: "Journal"),
+              BottomNavigationBarItem(icon: Icon(Icons.block_rounded), label: "Blocker"),
+              BottomNavigationBarItem(icon: Icon(Icons.settings_rounded), label: "Settings"),
+            ],
+          ),
         ),
       ),
     );

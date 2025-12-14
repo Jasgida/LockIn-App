@@ -1,3 +1,4 @@
+// lib/screens/email_verification_screen.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,20 +10,17 @@ class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<EmailVerificationScreen> createState() => _EmailVerificationScreenState();
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Timer? _timer;
-  bool _isEmailVerified = false;
   bool _isResending = false;
 
   @override
   void initState() {
     super.initState();
 
-    // Start checking every 3 seconds
     _timer = Timer.periodic(const Duration(seconds: 3), (_) {
       _checkVerificationStatus();
     });
@@ -33,16 +31,13 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null && user.emailVerified) {
-      setState(() => _isEmailVerified = true);
-
       _timer?.cancel();
 
       if (!mounted) return;
 
-      // Navigate to main application
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const ShellScreen()),
+        MaterialPageRoute(builder: (_) => ShellScreen()), // ← NO const
       );
     }
   }
@@ -102,7 +97,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               ),
               const SizedBox(height: 40),
 
-              // RESEND BUTTON
               _isResending
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
@@ -119,16 +113,15 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     ),
               const SizedBox(height: 20),
 
-              // BACK TO LOGIN
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (_) => const LoginScreen()),
+                    MaterialPageRoute(builder: (_) => LoginScreen()), // ← NO const
                   );
                 },
                 child: const Text("Back to Login"),
-              )
+              ),
             ],
           ),
         ),

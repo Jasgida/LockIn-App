@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
+          MaterialPageRoute(builder: (_) => EmailVerificationScreen()), // ← REMOVED const
         );
         return;
       }
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const ShellScreen()), // ← NO KEY NEEDED
+        MaterialPageRoute(builder: (_) => ShellScreen()), // ← REMOVED const
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextButton(
                       onPressed: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
+                        MaterialPageRoute(builder: (_) => ForgotPasswordScreen()), // ← REMOVED const
                       ),
                       child: const Text("Forgot Password?"),
                     ),
@@ -217,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextButton(
                     onPressed: () => Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const SignUpScreen()),
+                      MaterialPageRoute(builder: (_) => SignUpScreen()), // ← REMOVED const
                     ),
                     child: RichText(
                       text: TextSpan(

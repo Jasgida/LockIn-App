@@ -6,9 +6,7 @@ import '../utils/quotes_manager.dart';
 import '../models/quote.dart';
 
 class HomeScreen extends StatefulWidget {
-  final void Function(int)? goToTab; // ← THIS IS THE KEY
-
-  const HomeScreen({super.key, this.goToTab});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -52,13 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // NOW IT WORKS PERFECTLY
   void _startFocus() {
-    widget.goToTab?.call(1); // Focus tab
+    DefaultTabController.of(context)?.animateTo(1);
   }
 
   void _openSettings() {
-    widget.goToTab?.call(4); // Settings tab
+    DefaultTabController.of(context)?.animateTo(4);
   }
 
   @override
@@ -82,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                 ),
                 IconButton(
-                  onPressed: _openSettings, // WORKS 100%
+                  onPressed: _openSettings,
                   icon: const Icon(Icons.settings_outlined),
                 ),
               ],
@@ -94,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // BIG BUTTON — WORKS 100%
             Center(
               child: GestureDetector(
                 onTap: _startFocus,
@@ -122,7 +118,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // ... rest of your beautiful UI stays exactly the same ...
             const SizedBox(height: 18),
             Center(child: Text("Today's Focus", style: TextStyle(color: Colors.grey[700]))),
             const SizedBox(height: 8),

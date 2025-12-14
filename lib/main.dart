@@ -16,8 +16,9 @@ import 'screens/login_screen.dart';
 import 'screens/email_verification_screen.dart';
 import 'utils/quotes_manager.dart';
 
-// ONLY THE STUB — NO CONDITIONAL IMPORT (causes build error)
-import 'services/pin_overlay_stub.dart';
+// THIS ONE LINE FIXES EVERYTHING
+import 'services/pin_overlay_stub.dart'
+    if (dart.library.io) 'services/pin_overlay_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,18 +72,29 @@ class _AuthWrapperState extends State<AuthWrapper> {
   @override
   void initState() {
     super.initState();
-    // PIN overlay will be added in v1.1 — removed for now so APK builds
-    // Future updates will bring unbreakable lock
+
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      _authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+        if (user != null && user.emailVerified) {
+          PinOverlayService().start();
+          EmergencyEscape.startListening();
+        } else {
+          PinOverlayService().stop();
+          EmergencyEscape.stopListening();
+        }
+      });
+    }
   }
 
   @override
   void dispose() {
     _authSub?.cancel();
+    EmergencyEscape.stopListening();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -95,5 +107,5 @@ class _AuthWrapperState extends State<AuthWrapper> {
         return const ShellScreen();
       },
     );
-  }
+  }   
 }
