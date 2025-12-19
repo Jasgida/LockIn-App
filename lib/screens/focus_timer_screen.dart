@@ -1,7 +1,6 @@
+// lib/screens/focus_timer_screen.dart
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart'; // ✅ Required for Ticker
-import 'package:provider/provider.dart';
-import '../providers/focus_model.dart';
 
 class FocusTimerScreen extends StatefulWidget {
   const FocusTimerScreen({super.key});
@@ -10,147 +9,124 @@ class FocusTimerScreen extends StatefulWidget {
   State<FocusTimerScreen> createState() => _FocusTimerScreenState();
 }
 
-class _FocusTimerScreenState extends State<FocusTimerScreen>
-    with SingleTickerProviderStateMixin {
-  Duration _remaining = const Duration(minutes: 25);
-  bool _running = false;
-  late Ticker _ticker;
+class _FocusTimerScreenState extends State<FocusTimerScreen> {
+  final _hoursController = TextEditingController(text: '0');
+  final _minutesController = TextEditingController(text: '25');
+  final _secondsController = TextEditingController(text: '0');
 
-  @override
-  void initState() {
-    super.initState();
-
-    _ticker = createTicker((_) {
-      if (!_running) return;
-
-      setState(() {
-        _remaining -= const Duration(seconds: 1);
-
-        if (_remaining <= Duration.zero) {
-          _remaining = Duration.zero;
-          _running = false;
-          _ticker.stop();
-          _onSessionComplete();
-        }
-      });
-    });
-  }
-
-  Future<void> _onSessionComplete() async {
-    final focus = Provider.of<FocusModel>(context, listen: false);
-    await focus.addMinutes(25);
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Focus session completed — well done!')),
-      );
-    }
-  }
+  Timer? _timer;
+  int _remainingSeconds = 0;
+  bool _isRunning = false;
 
   @override
   void dispose() {
-    _ticker.dispose();
+    _timer?.cancel();
+    _hoursController.dispose();
+    _minutesController.dispose();
+    _secondsController.dispose();
     super.dispose();
   }
 
-  String _format(Duration d) {
-    final m = d.inMinutes.remainder(60).toString().padLeft(2, '0');
-    final s = d.inSeconds.remainder(60).toString().padLeft(2, '0');
-    return '$m:$s';
+  void _startTimer() {
+    final hours = int.tryParse(_hoursController.text) ?? 0;
+    final minutes = int.tryParse(_minutesController.text) ?? 0;
+    final seconds = int.tryParse(_secondsController.text) ?? 0;
+
+    _remainingSeconds = hours * 3600 + minutes * 60 + seconds;
+
+    if (_remainingSeconds <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter a valid time")),
+      );
+      return;
+    }
+
+    setState(() => _isRunning = true);
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (_remainingSeconds > 0) {
+        setState(() => _remainingSeconds--);
+      } else {
+        _stopTimer();
+      }
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    setState(() => _isRunning = false);
+  }
+
+  String _formatTime(int seconds) {
+    final h = seconds ~/ 3600;
+    final m = (seconds % 3600) ~/ 60;
+    final s = seconds % 60;
+    return '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
   }
 
   @override
   Widget build(BuildContext context) {
-    final accent = Theme.of(context).colorScheme.primary;
-
-    return SafeArea(
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Center(
-            child: Text(
-              'Focus',
-              style: Theme.of(context).textTheme.headlineSmall,
+    return Scaffold(
+      appBar: AppBar(title: const Text("Focus Timer")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(_formatTime(_remainingSeconds), style: const TextStyle(fontSize: 72, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 40),
+            if (!_isRunning) Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _TimeField(controller: _hoursController, label: "Hours"),
+                const Text(" : ", style: TextStyle(fontSize: 32)),
+                _TimeField(controller: _minutesController, label: "Minutes"),
+                const Text(" : ", style: TextStyle(fontSize: 32)),
+                _TimeField(controller: _secondsController, label: "Seconds"),
+              ],
             ),
-          ),
-          const SizedBox(height: 24),
-
-          /// Timer Text
-          Text(
-            _format(_remaining),
-            style: TextStyle(
-              fontSize: 64,
-              color: accent,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 40),
+            SizedBox(
+              width: 200,
+              height: 60,
+              child: _isRunning
+                  ? ElevatedButton(
+                      onPressed: _stopTimer,
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      child: const Text("Stop", style: TextStyle(fontSize: 20)),
+                    )
+                  : ElevatedButton(
+                      onPressed: _startTimer,
+                      child: const Text("Start Focus", style: TextStyle(fontSize: 20)),
+                    ),
             ),
-          ),
-
-          const SizedBox(height: 20),
-
-          /// Buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _running = !_running;
-                    if (_running) {
-                      _ticker.start();
-                    } else {
-                      _ticker.stop();
-                    }
-                  });
-                },
-                child: Text(_running ? 'Pause' : 'Start'),
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: accent,
-                  side: BorderSide(color: accent),
-                ),
-                onPressed: () {
-                  setState(() {
-                    _remaining = const Duration(minutes: 25);
-                    _running = false;
-                    _ticker.stop();
-                  });
-                },
-                child: const Text('End'),
-              ),
-              const SizedBox(width: 12),
-              OutlinedButton(
-                onPressed: () {
-                  setState(() {
-                    _remaining += const Duration(minutes: 5);
-                  });
-                },
-                child: const Text('Extend'),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 30),
-
-          /// Background Placeholder
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: accent.withOpacity(0.08),
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(24),
-                ),
-              ),
-              child: const Center(
-                child: Text('Focus background wave / animation placeholder'),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _TimeField extends StatelessWidget {
+  final TextEditingController controller;
+  final String label;
+
+  const _TimeField({required this.controller, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(label),
+        SizedBox(
+          width: 60,
+          child: TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 32),
+          ),
+        ),
+      ],
     );
   }
 }

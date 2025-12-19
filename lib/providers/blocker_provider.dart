@@ -3,18 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:installed_apps/installed_apps.dart';
+import 'package:installed_apps/app_info.dart'; // ← ADD THIS
 import 'package:app_usage/app_usage.dart';
-
-class AppInfo {
-  final String name;
-  final String packageName;
-  AppInfo({required this.name, required this.packageName});
-}
 
 class BlockedApp {
   final String packageName;
   final String appName;
   final int dailyLimitMinutes;
+
   BlockedApp({
     required this.packageName,
     required this.appName,
@@ -52,13 +48,13 @@ class BlockerProvider extends ChangeNotifier {
 
   Future<void> _loadInstalledApps() async {
     try {
-      final apps = await InstalledApps.getInstalledApps();
-      allApps = apps.map((app) => AppInfo(
-            name: app.name,
-            packageName: app.packageName,
-          )).toList();
+      final apps = await InstalledApps.getInstalledApps(true, true); // exclude system, with icon
+
+      allApps = apps;
+
+      allApps.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     } catch (e) {
-      if (kDebugMode) print('Failed to load installed apps: $e');
+      debugPrint('Failed to load installed apps: $e');
       allApps = [];
     }
   }
@@ -85,24 +81,24 @@ class BlockerProvider extends ChangeNotifier {
         );
       }).toList();
     } catch (e) {
-      if (kDebugMode) print('Failed to load blocked apps: $e');
+      debugPrint('Failed to load blocked apps: $e');
       blockedApps = [];
     }
   }
 
   Future<void> _loadTodayUsage() async {
     try {
+      final appUsage = AppUsage();
       final now = DateTime.now();
       final startOfDay = DateTime(now.year, now.month, now.day);
-      final usageList = await AppUsage().getAppUsage(startOfDay, now);
+      final usageList = await appUsage.getAppUsage(startOfDay, now);
 
-      // Correct field: 'usage' is Duration — convert to minutes
       todayUsage = {
         for (var info in usageList)
           info.packageName: info.usage.inMinutes
       };
     } catch (e) {
-      if (kDebugMode) print('App usage not available: $e');
+      debugPrint('App usage not available: $e');
       todayUsage = {};
     }
   }
@@ -133,7 +129,10 @@ class BlockerProvider extends ChangeNotifier {
         'blockedAt': FieldValue.serverTimestamp(),
       });
 
-      blockedApps.add(BlockedApp(packageName: app.packageName, appName: app.name));
+      blockedApps.add(BlockedApp(
+        packageName: app.packageName,
+        appName: app.name,
+      ));
     }
 
     notifyListeners();

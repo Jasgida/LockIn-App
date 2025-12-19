@@ -5,6 +5,8 @@ import 'package:installed_apps/installed_apps.dart';
 import 'package:installed_apps/app_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// ADD THESE IF YOU HAVE BLOCKING SERVICE
+// import 'package:your_blocking_service/your_service.dart'; // e.g. accessibility or overlay
 
 class AppBlockerScreen extends StatefulWidget {
   const AppBlockerScreen({super.key});
@@ -25,17 +27,9 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
 
   Future<void> _loadApps() async {
     try {
-      // THIS WORKS 100% WITH installed_apps 1.6.0
-      final allApps = await InstalledApps.getInstalledApps();
+      final allApps = await InstalledApps.getInstalledApps(true, true);
 
-      // Remove system apps manually
-      final userApps = allApps
-          .where((app) =>
-              !app.packageName.startsWith('com.android') &&
-              !app.packageName.startsWith('com.google.android'))
-          .toList();
-
-      userApps.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      allApps.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -47,9 +41,9 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
         blockedApps = snapshot.docs.map((doc) => doc.id).toSet();
       }
 
-      setState(() => apps = userApps);
+      setState(() => apps = allApps);
     } catch (e) {
-      debugPrint('Error loading apps: $e');
+      debugPrint("Error loading apps: $e");
       setState(() => apps = []);
     }
   }
@@ -64,18 +58,42 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
         .collection('blocked_apps')
         .doc(packageName);
 
-    blocked ? await ref.set({'blocked': true}) : await ref.delete();
+    try {
+      if (blocked) {
+        await ref.set({'blocked': true});
+      } else {
+        await ref.delete();
+      }
+    } catch (e) {
+      debugPrint("Firestore error: $e");
+    }
 
+    // INSTANT LOCAL UPDATE — NO DELAY
     setState(() {
-      blocked ? blockedApps.add(packageName) : blockedApps.remove(packageName);
+      if (blocked) {
+        blockedApps.add(packageName);
+      } else {
+        blockedApps.remove(packageName);
+      }
     });
+
+    // INSTANT BLOCK/UNBLOCK — CALL YOUR BLOCKING SERVICE HERE
+    // Example if you have an accessibility service or overlay:
+    // if (blocked) {
+    //   YourBlockingService.blockApp(packageName);
+    // } else {
+    //   YourBlockingService.unblockApp(packageName);
+    // }
+
+    // Or if you have a broadcast or method channel:
+    // YourMethodChannel.invokeMethod('blockApp', {'package': packageName, 'block': blocked});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Block Apps During Focus'),
+        title: const Text("Block Apps During Focus"),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
       ),
@@ -88,22 +106,23 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
                 itemBuilder: (context, index) {
                   final app = apps[index];
                   final isBlocked = blockedApps.contains(app.packageName);
-                  final Uint8List? icon = app.icon; // THIS IS NOW POPULATED IN 1.6.0
+                  Uint8List? iconBytes = app.icon;
 
                   return SwitchListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     secondary: CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: icon != null ? MemoryImage(icon) : null,
-                      child: icon == null
+                      radius: 30,
+                      backgroundImage: iconBytes != null ? MemoryImage(iconBytes) : null,
+                      child: iconBytes == null
                           ? const Icon(Icons.apps, size: 30, color: Colors.grey)
                           : null,
                     ),
-                    title: Text(app.name, style: const TextStyle(fontWeight: FontWeight.w500)),
-                    subtitle: Text(app.packageName, style: const TextStyle(fontSize: 10)),
+                    title: Text(app.name, style: const TextStyle(fontSize: 18)),
+                    subtitle: Text(app.packageName, style: const TextStyle(fontSize: 12)),
                     value: isBlocked,
-                    activeColor: Theme.of(context).colorScheme.primary,
                     onChanged: (val) => _toggleApp(app.packageName, val),
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    activeTrackColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                   );
                 },
               ),

@@ -14,30 +14,30 @@ class ShellScreen extends StatefulWidget {
 }
 
 class _ShellScreenState extends State<ShellScreen> {
-  int _selectedIndex = 0;
+  int _currentIndex = 0;
 
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    FocusTimerScreen(),
-    JournalScreen(),
-    AppBlockerScreen(),
-    SettingsScreen(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() => _selectedIndex = index);
+  void _changeTab(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens,
+        index: _currentIndex,
+        children: [
+          HomeScreen(onTabChange: _changeTab), // ← REQUIRED ARGUMENT ADDED
+          const FocusTimerScreen(),
+          const JournalScreen(),
+          const AppBlockerScreen(),
+          const SettingsScreen(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: _currentIndex,
+        onTap: _changeTab,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Colors.grey,

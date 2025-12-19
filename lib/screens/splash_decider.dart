@@ -16,32 +16,37 @@ class ShellScreen extends StatefulWidget {
 class _ShellScreenState extends State<ShellScreen> {
   int _index = 0;
 
-  final screens = [
-    const HomeScreen(),
-    const FocusTimerScreen(),
-    const JournalScreen(),
-    const AppBlockerScreen(),
-    const SettingsScreen(),
-  ];
+  void _onTabTapped(int index) {
+    setState(() => _index = index);
+  }
 
   @override
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
 
     return Scaffold(
-      body: screens[_index],
+      body: IndexedStack(
+        index: _index,
+        children: [
+          HomeScreen(onTabChange: _onTabTapped), // ← REQUIRED ARGUMENT ADDED
+          const FocusTimerScreen(),
+          const JournalScreen(),
+          const AppBlockerScreen(),
+          const SettingsScreen(),
+        ],
+      ),
       extendBody: true,
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 20)],
+          boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 20)],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: BottomNavigationBar(
             currentIndex: _index,
-            onTap: (i) => setState(() => _index = i),
+            onTap: _onTabTapped,
             type: BottomNavigationBarType.fixed,
             backgroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.grey[900] : Colors.white,
             selectedItemColor: accent,

@@ -6,7 +6,9 @@ import '../utils/quotes_manager.dart';
 import '../models/quote.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final void Function(int) onTabChange;
+
+  const HomeScreen({super.key, required this.onTabChange});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -51,11 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _startFocus() {
-    DefaultTabController.of(context)?.animateTo(1);
+    widget.onTabChange(1); // Go to Focus tab
   }
 
   void _openSettings() {
-    DefaultTabController.of(context)?.animateTo(4);
+    widget.onTabChange(4); // Go to Settings tab
   }
 
   @override
