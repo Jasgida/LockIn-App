@@ -121,7 +121,7 @@ class _AppBlockerScreenState extends State<AppBlockerScreen> {
                     subtitle: Text(app.packageName, style: const TextStyle(fontSize: 12)),
                     value: isBlocked,
                     onChanged: (val) => _toggleApp(app.packageName, val),
-                    activeColor: Theme.of(context).colorScheme.primary,
+                    activeThumbColor: Theme.of(context).colorScheme.primary,
                     activeTrackColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                   );
                 },

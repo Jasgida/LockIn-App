@@ -37,7 +37,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => ShellScreen()), // ← NO const
+        MaterialPageRoute(builder: (_) => const ShellScreen()), // ← NO const
       );
     }
   }
@@ -117,7 +117,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (_) => LoginScreen()), // ← NO const
+                    MaterialPageRoute(builder: (_) => const LoginScreen()), // ← NO const
                   );
                 },
                 child: const Text("Back to Login"),

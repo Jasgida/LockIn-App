@@ -34,9 +34,8 @@ class AccessibilityBlocker {
         .get();
 
     if (doc.exists) {
-      // SHOW OVERLAY — BLOCKS THE APP
+      // SHOW OVERLAY + CLOSE APP
       await FlutterAccessibilityService.showOverlayWindow();
-      // CLOSE APP — HOME ACTION
       await FlutterAccessibilityService.performGlobalAction(GlobalAction.globalActionHome);
     }
   }

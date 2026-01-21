@@ -230,7 +230,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Text("Dark Mode", style: TextStyle(fontSize: 16)),
                 Switch(
                   value: theme.isDark,
-                  activeColor: accent,
+                  activeThumbColor: accent,
                   onChanged: (value) => theme.toggleDarkMode(),
                 ),
               ],

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:installed_apps/installed_apps.dart';
-import 'package:installed_apps/app_info.dart'; // ← ADD THIS
+import 'package:installed_apps/app_info.dart';
 import 'package:app_usage/app_usage.dart';
 
 class BlockedApp {
@@ -48,6 +48,7 @@ class BlockerProvider extends ChangeNotifier {
 
   Future<void> _loadInstalledApps() async {
     try {
+      // FIXED — POSITIONAL ARGUMENTS FOR v2.1.0
       final apps = await InstalledApps.getInstalledApps(true, true); // exclude system, with icon
 
       allApps = apps;

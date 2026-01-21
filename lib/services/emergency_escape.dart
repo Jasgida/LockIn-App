@@ -1,5 +1,4 @@
 // lib/services/emergency_escape.dart
-import 'package:flutter/material.dart';
 
 class EmergencyEscape {
   static void startListening() {

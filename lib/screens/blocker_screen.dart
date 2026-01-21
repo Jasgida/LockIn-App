@@ -50,7 +50,7 @@ class BlockerScreen extends StatelessWidget {
                       subtitle: Text("$minutes min today"),
                       trailing: Switch(
                         value: blocked,
-                        activeColor: Colors.red,
+                        activeThumbColor: Colors.red,
                         onChanged: (_) => blocker.toggleBlock(app),
                       ),
                     ),

@@ -21,6 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  bool _obscurePassword = true; // ← FOR VISIBILITY TOGGLE
+
   bool _isLoading = false;
   bool _rememberMe = false;
   String? _errorMessage;
@@ -64,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => EmailVerificationScreen()), // ← REMOVED const
+          MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
         );
         return;
       }
@@ -80,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => ShellScreen()), // ← REMOVED const
+        MaterialPageRoute(builder: (_) => const ShellScreen()),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -108,19 +110,19 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   'Welcome Back',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   'Log in to continue your focus journey.',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 15),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 16),
                 ),
                 const SizedBox(height: 40),
 
@@ -128,22 +130,35 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     prefixIcon: const Icon(Icons.email_outlined),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                    filled: true,
+                    fillColor: Colors.grey[50],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
 
-                // PASSWORD FIELD
+                // PASSWORD FIELD WITH VISIBILITY TOGGLE
                 TextField(
                   controller: _passwordController,
-                  obscureText: true,
+                  obscureText: _obscurePassword,
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (_) => _login(),
                   decoration: InputDecoration(
                     labelText: 'Password',
                     prefixIcon: const Icon(Icons.lock_outline),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
+                      onPressed: () {
+                        setState(() => _obscurePassword = !_obscurePassword);
+                      },
+                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                    filled: true,
+                    fillColor: Colors.grey[50],
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -165,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextButton(
                       onPressed: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => ForgotPasswordScreen()), // ← REMOVED const
+                        MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
                       ),
                       child: const Text("Forgot Password?"),
                     ),
@@ -175,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // ERROR MESSAGE
                 if (_errorMessage != null)
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(14),
                     margin: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
                       color: Colors.red.shade50,
@@ -185,18 +200,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Row(
                       children: [
                         const Icon(Icons.error_outline, color: Colors.red),
-                        const SizedBox(width: 10),
-                        Expanded(child: Text(_errorMessage!, style: const TextStyle(color: Colors.red))),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            _errorMessage!,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
                       ],
                     ),
                   ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
                 // LOGIN BUTTON
                 SizedBox(
                   width: double.infinity,
-                  height: 52,
+                  height: 56,
                   child: _isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
@@ -204,9 +224,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: accent,
                             foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                           ),
-                          child: const Text('Log In', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                          child: const Text(
+                            'Log In',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
                         ),
                 ),
 
@@ -217,11 +241,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextButton(
                     onPressed: () => Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => SignUpScreen()), // ← REMOVED const
+                      MaterialPageRoute(builder: (_) => const SignUpScreen()),
                     ),
                     child: RichText(
                       text: TextSpan(
-                        style: TextStyle(color: Colors.grey[700]),
+                        style: TextStyle(color: Colors.grey[700], fontSize: 15),
                         children: const [
                           TextSpan(text: "Don't have an account? "),
                           TextSpan(

@@ -13,15 +13,20 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _nameController = TextEditingController(); // Nickname (optional)
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
+
+  bool _obscurePassword = true;
+  bool _obscureConfirm = true;
 
   bool _isLoading = false;
   String? _errorMessage;
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmController.dispose();
@@ -31,6 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _signup() async {
     FocusScope.of(context).unfocus();
 
+    final name = _nameController.text.trim(); // Can be empty
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     final confirm = _confirmController.text;
@@ -38,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() => _errorMessage = null);
 
     if (email.isEmpty || password.isEmpty || confirm.isEmpty) {
-      setState(() => _errorMessage = "All fields are required.");
+      setState(() => _errorMessage = "Email and password are required.");
       return;
     }
 
@@ -63,12 +69,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final user = credential.user;
       if (user == null) return;
 
+      // Save nickname if provided
+      if (name.isNotEmpty) {
+        await user.updateDisplayName(name);
+        await user.reload();
+      }
+
       // Send verification email
       await user.sendEmailVerification();
 
       if (!mounted) return;
 
-      // Go to verification screen
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
@@ -117,6 +128,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 40),
 
+                // NICKNAME FIELD (OPTIONAL)
+                TextField(
+                  controller: _nameController,
+                  keyboardType: TextInputType.name,
+                  textCapitalization: TextCapitalization.words,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    labelText: "Nickname (optional)",
+                    hintText: "e.g. Dav, King, FocusMaster",
+                    prefixIcon: const Icon(Icons.person_outline),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                    filled: true,
+                    fillColor: Colors.grey[50],
+                  ),
+                ),
+                const SizedBox(height: 18),
+
                 // EMAIL
                 TextField(
                   controller: _emailController,
@@ -132,14 +160,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 18),
 
-                // PASSWORD
+                // PASSWORD WITH VISIBILITY TOGGLE
                 TextField(
                   controller: _passwordController,
-                  obscureText: true,
+                  obscureText: _obscurePassword,
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     labelText: "Password",
                     prefixIcon: const Icon(Icons.lock_outline),
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
+                      onPressed: () {
+                        setState(() => _obscurePassword = !_obscurePassword);
+                      },
+                    ),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
                     filled: true,
                     fillColor: Colors.grey[50],
@@ -147,15 +181,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 18),
 
-                // CONFIRM PASSWORD
+                // CONFIRM PASSWORD WITH VISIBILITY TOGGLE
                 TextField(
                   controller: _confirmController,
-                  obscureText: true,
+                  obscureText: _obscureConfirm,
                   textInputAction: TextInputAction.done,
                   onSubmitted: (_) => _signup(),
                   decoration: InputDecoration(
                     labelText: "Confirm Password",
                     prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscureConfirm ? Icons.visibility_off : Icons.visibility),
+                      onPressed: () {
+                        setState(() => _obscureConfirm = !_obscureConfirm);
+                      },
+                    ),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
                     filled: true,
                     fillColor: Colors.grey[50],

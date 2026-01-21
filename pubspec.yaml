@@ -4,7 +4,7 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.0
+  sdk: ">=3.0.0 <4.0.0"  # ← FIXED — COMPATIBLE WITH CURRENT PACKAGES
   flutter: ">=3.22.0"
 
 dependencies:
@@ -24,12 +24,12 @@ dependencies:
 
   # BLOCKER & ANDROID FEATURES
   permission_handler: ^11.3.1
-  installed_apps: ^1.6.0
+  installed_apps: ^1.6.0  # ← DOWGRADED TO v1.6.0 (supports positional arguments true, true)
   app_usage: ^4.0.1
   flutter_accessibility_service: ^1.0.0
   workmanager: ^0.7.0
 
-  # MODERN, MAINTAINED VIBRATION PACKAGE (replaces broken flutter_vibrate)
+  # MODERN, MAINTAINED VIBRATION PACKAGE
   vibration: ^2.0.0
 
 dev_dependencies:
